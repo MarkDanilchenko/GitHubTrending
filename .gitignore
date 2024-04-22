@@ -3,6 +3,7 @@
 # COMMON IGNORE
 # ----------
 /dist
+/draft
 draft.*
 staticfiles/
 mediafiles/

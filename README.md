@@ -1,6 +1,6 @@
 ## App Description
 
-This is a service, that is able to check GitHub API pull trending repositories.
+This is a service, that is able to check GitHub API and pull trending repositories.
 
 Technologies used:
 

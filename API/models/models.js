@@ -18,7 +18,6 @@ const TrendingGitReposSchema = new Schema(
 		owner_login: {
 			type: String,
 			required: true,
-			unique: true,
 		},
 		html_url: {
 			type: String,
@@ -27,7 +26,7 @@ const TrendingGitReposSchema = new Schema(
 		},
 		description: {
 			type: String,
-			required: true,
+			default: '',
 		},
 		stargazers_count: {
 			type: Number,

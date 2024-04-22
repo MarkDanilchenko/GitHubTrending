@@ -1,7 +1,6 @@
 // --------------------------------------SERVER_CONFIG
 const express = require('express');
 const app = express();
-app.enable('view cache');
 const { router: apiRouter } = require('./routes/router.js');
 
 // --------------------------------------COMMON_MIDDLEWARE
@@ -13,9 +12,9 @@ app.use((req, res, next) => {
 app.use('/api/v1', apiRouter);
 
 // --------------------------------------TEST_URL
-app.get('/hello', (req, res) => {
+app.get('/', (req, res) => {
 	res.status(200);
-	res.send('Hello world!');
+	res.send(`Server running!`);
 	res.end();
 });
 

@@ -10,6 +10,10 @@ const TrendingGitReposSchema = new Schema(
 			required: true,
 			unique: true,
 		},
+		name: {
+			type: String,
+			required: true,
+		},
 		git_id: {
 			type: Number,
 			required: true,

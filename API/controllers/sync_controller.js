@@ -22,18 +22,19 @@ class SyncController {
 				},
 			});
 			if (result.status === 200) {
-				if ((await TrendingGitRepos.find({ language: req.body.language })).length > 0) {
-					await TrendingGitRepos.deleteMany({ language: req.body.language });
+				if ((await TrendingGitRepos.find({ language: { $regex: new RegExp(`^${req.body.language}$`, 'i') } })).length > 0) {
+					await TrendingGitRepos.deleteMany({ language: { $regex: new RegExp(`^${req.body.language}$`, 'i') } });
 				}
 				for (const repo of result.data.items) {
 					await TrendingGitRepos.create({
 						full_name: repo.full_name,
+						name: repo.name,
 						git_id: repo.id,
 						owner_login: repo.owner.login,
 						html_url: repo.html_url,
 						description: repo.description ? repo.description : 'Without description...',
 						stargazers_count: repo.stargazers_count,
-						language: repo.language.toLowerCase(),
+						language: repo.language,
 					}).catch((error) => console.log(error));
 				}
 				res.status(200);
@@ -72,7 +73,12 @@ class SyncController {
 	}
 	async getTrendingReposExact(req, res) {
 		try {
-			const result = await TrendingGitRepos.findOne({ $or: [{ full_name: req.params.nameOrId }, { git_id: req.params.nameOrId }] });
+			let result = null;
+			if (typeof req.params.nameOrId === 'string') {
+				result = await TrendingGitRepos.findOne({ name: { $regex: new RegExp(`^${req.params.nameOrId}$`, 'i') } });
+			} else {
+				result = await TrendingGitRepos.findOne({ git_id: req.params.nameOrId });
+			}
 			if (result === null) {
 				res.status(200);
 				res.json({ message: 'No data found!' });

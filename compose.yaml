@@ -1,1 +1,20 @@
 version: '3.8'
+
+services:
+    # ------------------------------------------------------webserver(nginx)
+    webserver:
+    # in progress...
+
+    # ------------------------------------------------------api(expressjs)
+    api:
+    # in progress...
+
+    # ------------------------------------------------------db(mongodb)
+    db:
+    # in progress...
+
+    # ------------------------------------------------------other(volumes && networks)
+volumes:
+    # in progress...
+networks:
+    # in progress...

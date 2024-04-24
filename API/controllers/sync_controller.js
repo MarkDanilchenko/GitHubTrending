@@ -3,14 +3,17 @@ const { Octokit } = require('octokit');
 const octokit = new Octokit({});
 const { validationResult } = require('express-validator');
 const { TrendingGitRepos } = require('../models/models.js');
+let autoSync = require('./autosync.js');
 
 // --------------------------------------CONTROLLER_SYNC
 class SyncController {
 	async syncTrendingRepos(req, res) {
 		try {
 			if (req.body.language === undefined || !['python', 'ruby', 'javascript'].includes(req.body.language)) {
-				return res.status(400).json({ message: 'Invalid or missing language! Valid languages: [ python, ruby, javascript ]' });
+				return res.status(400).json({ message: 'Invalid or missing language! Valid languages are: [ python, ruby, javascript ]' });
 			}
+			// ----------------------refresh auto sync timer
+			autoSync.refreshTimer();
 			const result = await octokit.request('GET /search/repositories', {
 				q: `stars:>=10000 language:${req.body.language}`,
 				sort: 'stars',
@@ -54,14 +57,14 @@ class SyncController {
 	}
 	async getTrendingRepos(req, res) {
 		try {
-			const result = await TrendingGitRepos.find({}).sort({ stargazers_count: -1 });
+			let result = await TrendingGitRepos.find({}).sort({ stargazers_count: -1 });
 			if (result.length === 0) {
 				res.status(200);
 				res.json({ message: 'No data found!' });
 				res.end();
 			} else {
 				res.status(200);
-				res.json(JSON.stringify(result));
+				res.json(result);
 				res.end();
 			}
 		} catch (error) {
@@ -85,7 +88,45 @@ class SyncController {
 				res.end();
 			} else {
 				res.status(200);
-				res.json(JSON.stringify(result));
+				res.json(result);
+				res.end();
+			}
+		} catch (error) {
+			console.log(error);
+			res.status(500);
+			res.json({ message: 'Error: ' + error.message });
+			res.end();
+		}
+	}
+	async stopAutoSync(req, res) {
+		try {
+			if (autoSync.autoSyncTimer._idleTimeout > 0) {
+				autoSync.stopTimer();
+				res.status(200);
+				res.json({ message: 'Auto sync disabled!' });
+				res.end();
+			} else {
+				res.status(200);
+				res.json({ message: 'Auto sync already disabled!' });
+				res.end();
+			}
+		} catch (error) {
+			console.log(error);
+			res.status(500);
+			res.json({ message: 'Error: ' + error.message });
+			res.end();
+		}
+	}
+	async startAutoSync(req, res) {
+		try {
+			if (autoSync.autoSyncTimer._idleTimeout > 0) {
+				res.status(200);
+				res.json({ message: 'Auto sync already enabled!' });
+				res.end();
+			} else {
+				autoSync.startTimer();
+				res.status(200);
+				res.json({ message: 'Auto sync started!' });
 				res.end();
 			}
 		} catch (error) {

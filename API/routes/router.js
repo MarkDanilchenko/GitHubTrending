@@ -10,6 +10,10 @@ router.route('/repos_sync').post(syncController.syncTrendingRepos);
 router.route('/repos_all').get(syncController.getTrendingRepos);
 // http://localhost:3000/api/v1/repos_single/:nameOrId
 router.route('/repos_single/:nameOrId').get(syncController.getTrendingReposExact);
+// http://localhost:3000/api/v1/stop_auto_sync
+router.route('/stop_auto_sync').get(syncController.stopAutoSync);
+// http://localhost:3000/api/v1/start_auto_sync
+router.route('/start_auto_sync').get(syncController.startAutoSync);
 
 // --------------------------------------EXPORT
 module.exports = { router };

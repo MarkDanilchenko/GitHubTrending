@@ -1,2 +1,14 @@
-/* import the Bootstrap */
+// some scoped styles defined in .vue component-files !!!
+// some scoped styles defined in .vue component-files !!!
+// some scoped styles defined in .vue component-files !!!
+
+/* import custom colors and fonts */
+@import 'colors.scss';
+@import 'fonts.scss';
+
+/* import the Bootstrap5 */
 @import '../../../node_modules/bootstrap/scss/bootstrap.scss';
+/* import custom styles */
+@import 'style_common.scss';
+@import 'style_dotCube.scss';
+@import 'style_colorMode.scss';

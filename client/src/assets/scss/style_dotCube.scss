@@ -1,0 +1,209 @@
+$size-cube: 210px;
+$faces-interval: calc(($size-cube / 2) / 5);
+$size-dot: 4px;
+$delay-anim: 0.3s;
+
+.mod {
+  position: absolute;
+  top: 45vh;
+  left: 0px;
+  width: 100vw;
+  // min-height: 50vh;
+  perspective: 330px;
+  background: transparent;
+
+  .project-name {
+    position: absolute;
+    width: $size-cube * 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.25em;
+    text-transform: uppercase;
+    letter-spacing: 0.5em;
+    line-height: 1.5em;
+    text-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+  }
+  .cube {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: calc(-1 * ($size-cube / 2));
+    margin-left: calc(-1 * ($size-cube / 2));
+    width: $size-cube;
+    height: $size-cube;
+    transform-style: preserve-3d;
+    transform-origin: calc($size-cube / 2) calc($size-cube / 2);
+    animation: spinCube 70000ms linear infinite;
+    .faces {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: $size-cube;
+      height: $size-cube;
+
+      .dot {
+        position: absolute;
+        // !!!
+        // background-color of the dots changes every time by switching theme-btn;
+        // !!!
+        width: $size-dot;
+        height: $size-dot;
+        border-radius: 50%;
+      }
+      .p1 {
+        top: calc(-1 * ($size-dot / 2));
+        margin-left: calc(-1 * ($size-dot / 2));
+      }
+      .p2 {
+        top: calc(-1 * ($size-dot / 2));
+        left: 50%;
+        margin-left: calc(-1 * ($size-dot / 2));
+      }
+      .p3 {
+        top: calc(-1 * ($size-dot / 2));
+        left: 100%;
+        margin-left: calc(-1 * ($size-dot / 2));
+      }
+      .p4 {
+        top: 50%;
+        left: calc(-1 * ($size-dot / 2));
+        margin-top: calc(-1 * ($size-dot / 2));
+      }
+      .p5 {
+        top: 50%;
+        left: 50%;
+        margin-top: calc(-1 * ($size-dot / 2));
+        margin-left: calc(-1 * ($size-dot / 2));
+      }
+      .p6 {
+        top: 50%;
+        left: 100%;
+        margin-top: calc(-1 * ($size-dot / 2));
+        margin-left: calc(-1 * ($size-dot / 2));
+      }
+      .p7 {
+        top: 100%;
+        left: 0%;
+        margin-top: calc(-1 * ($size-dot / 2));
+        margin-left: calc(-1 * ($size-dot / 2));
+      }
+      .p8 {
+        top: 100%;
+        left: 50%;
+        margin-top: calc(-1 * ($size-dot / 2));
+        margin-left: calc(-1 * ($size-dot / 2));
+      }
+      .p9 {
+        top: 100%;
+        left: 100%;
+        margin-top: calc(-1 * ($size-dot / 2));
+        margin-left: calc(-1 * ($size-dot / 2));
+      }
+      .p10 {
+        top: 25%;
+        left: 25%;
+        margin-top: calc(-1 * ($size-dot / 2));
+        margin-left: calc(-1 * ($size-dot / 2));
+      }
+      .p11 {
+        top: 25%;
+        left: 75%;
+        margin-top: calc(-1 * ($size-dot / 2));
+        margin-left: calc(-1 * ($size-dot / 2));
+      }
+      .p12 {
+        top: 75%;
+        left: 25%;
+        margin-top: calc(-1 * ($size-dot / 2));
+        margin-left: calc(-1 * ($size-dot / 2));
+      }
+      .p13 {
+        top: 75%;
+        left: 75%;
+        margin-top: calc(-1 * ($size-dot / 2));
+        margin-left: calc(-1 * ($size-dot / 2));
+      }
+    }
+    .f1 {
+      transform: translateZ(-$faces-interval * 5);
+      animation-delay: $delay-anim;
+    }
+    .f2 {
+      transform: translateZ(-$faces-interval * 4);
+      animation-delay: $delay-anim * 2;
+    }
+    .f3 {
+      transform: translateZ(-$faces-interval * 3);
+      animation-delay: $delay-anim * 3;
+    }
+    .f4 {
+      transform: translateZ(-$faces-interval * 2);
+      animation-delay: $delay-anim * 4;
+    }
+    .f5 {
+      transform: translateZ(-$faces-interval * 1);
+      animation-delay: $delay-anim * 5;
+    }
+    .f6 {
+      transform: translateZ(0px);
+      animation-delay: $delay-anim * 6;
+    }
+    .f7 {
+      transform: translateZ($faces-interval * 1);
+      animation-delay: $delay-anim * 7;
+    }
+    .f8 {
+      transform: translateZ($faces-interval * 2);
+      animation-delay: $delay-anim * 8;
+    }
+    .f9 {
+      transform: translateZ($faces-interval * 3);
+      animation-delay: $delay-anim * 9;
+    }
+    .f10 {
+      transform: translateZ($faces-interval * 4);
+      animation-delay: $delay-anim * 10;
+    }
+    .f11 {
+      transform: translateZ($faces-interval * 5);
+      animation-delay: $delay-anim * 11;
+    }
+  }
+}
+
+@keyframes spinCube {
+  0% {
+    transform: rotateY(0deg) rotateX(-45deg) rotate(0deg);
+  }
+  50% {
+    transform: rotateY(180deg) rotateX(135deg) rotate(180deg);
+  }
+  100% {
+    transform: rotateY(360deg) rotateX(315deg) rotate(360deg);
+  }
+}
+
+// @keyframes spinDots {
+//   0% {
+//     transform: rotateX(0deg) rotateY(45deg);
+//   }
+//   50% {
+//     transform: rotateX(-180deg) rotateY(-135deg);
+//   }
+//   100% {
+//     transform: rotateX(-360deg) rotateY(-315deg);
+//   }
+// }
+
+// @keyframes spinFaces {
+//   0% {
+//     transform: rotateX(0deg);
+//   }
+//   50% {
+//     transform: rotateX(180deg);
+//   }
+//   100% {
+//     transform: rotateX(0deg);
+//   }
+// }

@@ -1,0 +1,23 @@
+.container {
+	min-height: 100vh;
+}
+
+.nav-link {
+	color: $grey_color !important;
+}
+
+.nav-link:hover {
+	color: $green_color !important;
+}
+
+.nav-link-active-logo {
+	background: radial-gradient(50% 50%, transparent 10%, $grey_color 70%, transparent 100%);
+}
+
+.text-small {
+	font-size: 0.8rem;
+}
+
+.text-green {
+	color: $green_color !important;
+}

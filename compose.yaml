@@ -3,18 +3,59 @@ version: '3.8'
 services:
     # ------------------------------------------------------webserver(nginx)
     webserver:
-    # in progress...
-
+        restart: always
+        build:
+            context: .
+            dockerfile: Dockerfile__webserver
+        container_name: webserver
+        # volumes:
+        ports:
+            - 8080:80
+        networks:
+            - backend # for nginx if proxy is needed to containers' connections
+            - frontend # for nginx if proxy is not neede (all requests goes from frontend to backend containers with defined urls in .vue components)
+        depends_on:
+            api:
+                condition: service_healthy
     # ------------------------------------------------------api(expressjs)
     api:
-    # in progress...
+        restart: always
+        build:
+            context: .
+            dockerfile: Dockerfile__api
+        container_name: api
+        command: >
+            sh -c "npm run dev"
+        ports:
+            - ${SERVER_PORT_OUTER}:3000
+        expose:
+            - 3000
+        networks:
+            - backend
+        links:
+            - db
+        depends_on:
+            - db
 
     # ------------------------------------------------------db(mongodb)
     db:
-    # in progress...
+        restart: always
+        image: mongodb/mongodb-community-server:latest
+        container_name: db
+        ports:
+            - ${DB_PORT_OUTER}:27017
+        expose:
+            - 27017
+        networks:
+            - backend
+        volumes:
+            - ./API/dump:/dump
+            - ./API/db_data:/data/db
 
     # ------------------------------------------------------other(volumes && networks)
 volumes:
-    # in progress...
+    db_data:
+    dump:
 networks:
-    # in progress...
+    backend:
+    frontend:

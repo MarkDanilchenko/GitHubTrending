@@ -12,3 +12,12 @@
 @import 'style_common.scss';
 @import 'style_dotCube.scss';
 @import 'style_colorMode.scss';
+
+/* ------- customize Bootstrap button styles via mixins -------- */
+.btn-green-custom {
+	@include button-variant($green_color, $green_color_05, $white_color);
+}
+
+.btn-outline-green-custom {
+	@include button-outline-variant($green_color, $white_color);
+}

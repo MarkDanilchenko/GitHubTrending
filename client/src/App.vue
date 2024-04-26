@@ -6,7 +6,7 @@
         <component :is="Component" />
       </transition>
     </router-view>
-    <Footer />
+    <Footer v-if="$route.path !== '/'" />
   </div>
 </template>
 <script>

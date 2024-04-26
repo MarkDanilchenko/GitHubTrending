@@ -5,10 +5,10 @@
                 <!-- navigation logo -->
                 <!-- navigation logo -->
                 <!-- navigation logo -->
-                <router-link to="/" class="navbar-brand me-3 p-0"
+                <router-link to="/" class="navbar-brand me-3 p-0" alt="Home page" title="Home page"
                     :class="{ 'nav-link-active-logo': $route.path === '/' }">
                     <img src="@/assets/IMG/GitHub_logo.png" class="d-inline-block align-text-center" width="50"
-                        height="50" alt="GitHub logo" title="GitHub Trending">
+                        height="50" alt="GitHub logo" title="GitHub logo">
                 </router-link>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -102,41 +102,40 @@
 </template>
 
 <script>
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
 import Clock from '@/components/Clock.vue'
 export default {
     name: 'Navbar',
     components: {
         Clock
     },
-    data() {
-        return {
-            colorMode: $('html').attr('data-bs-theme'),
-        }
+    computed: {
+        ...mapState({
+            colorMode: state => state.color_mode.colorMode
+        }),
     },
     mounted() {
         // colorMode switcher settings
-        try {
-            if (this.colorMode === 'light') {
-                $('#colorMode_switcher').attr('checked', false);
-            } else if (this.colorMode === 'dark') {
-                $('#colorMode_switcher').attr('checked', true);
-            }
-        } catch (error) {
-            $("#colorMode_switcher").attr("checked", false);
+        if (this.colorMode == 'dark') {
+            $('#colorMode_switcher').attr('checked', true);
+        } else {
+            $('#colorMode_switcher').attr('checked', false);
         }
     },
     methods: {
+        ...mapMutations({
+            setColorMode: 'color_mode/setColorMode'
+        }),
         changeColorMode() {
-            if (this.colorMode === 'light') {
-                this.colorMode = 'dark';
-                $('html').attr('data-bs-theme', 'dark');
-                localStorage.setItem('colorMode', 'dark');
-                $('.dot').css('background', '#fff');
-            } else if (this.colorMode === 'dark') {
-                this.colorMode = 'light';
+            if (this.colorMode === 'dark') {
+                this.setColorMode('light');
                 $('html').attr('data-bs-theme', 'light');
                 localStorage.setItem('colorMode', 'light');
-                $('.dot').css('background', '#000');
+            }
+            else {
+                this.setColorMode('dark');
+                $('html').attr('data-bs-theme', 'dark');
+                localStorage.setItem('colorMode', 'dark');
             }
         }
     }

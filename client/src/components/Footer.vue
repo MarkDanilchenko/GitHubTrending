@@ -4,7 +4,8 @@
             <footer class="col-12 mt-3">
                 <ul class="nav justify-content-center">
                     <li class="nav-item">
-                        <router-link to="/" class="nav-link px-2" alt="Home page" title="Home page"><b>Home</b></router-link>
+                        <router-link to="/" class="nav-link px-2" alt="Home page"
+                            title="Home page"><b>Home</b></router-link>
                     </li>
                     <li class="nav-item">
                         <router-link to="#" class="nav-link px-2" title="Scroll to top" @click="scrollToTop">&#9650;
@@ -31,9 +32,4 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-.my-footer {
-    position: sticky;
-    top: 100vh;
-}
-</style>
+<style scoped lang="scss"></style>

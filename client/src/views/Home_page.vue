@@ -1,5 +1,5 @@
 <template>
-    <section class="my-greeting">
+    <section class="my-home-page">
         <router-link to="/main" class="nav-link" alt="Main page" title="Main page">
             <div class="d-flex  justify-content-center align-items-center">
                 <!-- .dots animation -->

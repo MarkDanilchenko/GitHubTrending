@@ -231,8 +231,10 @@
 
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
+import animation_404 from '@/mixins/animation_404.js';
 export default {
     name: '404_page',
+    mixins: [animation_404],
     computed: {
         ...mapState({
             colorMode: state => state.color_mode.colorMode

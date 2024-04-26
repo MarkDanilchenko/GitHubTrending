@@ -2,7 +2,7 @@
   <div class="container">
     <Navbar />
     <router-view v-slot="{ Component }">
-      <transition name="fadeComponent" mode="out-in">
+      <transition name="APP_fadeComponent" mode="out-in">
         <component :is="Component" />
       </transition>
     </router-view>
@@ -21,14 +21,4 @@ export default {
   }
 }
 </script>
-<style scoped lang="scss">
-.fadeComponent-enter-active,
-.fadeComponent-leave-active {
-  transition: opacity .5s ease;
-}
-
-.fadeComponent-enter-from,
-.fadeComponent-leave-to {
-  opacity: 0;
-}
-</style>
+<style scoped lang="scss"></style>

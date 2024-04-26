@@ -2,6 +2,16 @@
 	min-height: 100vh;
 }
 
+.APP_fadeComponent-enter-active,
+.APP_fadeComponent-leave-active {
+	transition: opacity 0.3s ease;
+}
+
+.APP_fadeComponent-enter-from,
+.APP_fadeComponent-leave-to {
+	opacity: 0;
+}
+
 .nav-link {
 	color: $grey_color !important;
 }

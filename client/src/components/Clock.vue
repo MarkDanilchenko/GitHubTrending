@@ -27,12 +27,4 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-@import '@/assets/scss/colors.scss';
-.custom-timer {
-    font-size: 1.5rem;
-    font-weight: 700;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    text-shadow: 15px 5px 5px $grey_color;
-}
-</style>
+<style scoped lang="scss"></style>

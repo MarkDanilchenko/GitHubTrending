@@ -1,6 +1,5 @@
 <template>
     <section class="my-main-page">
-
     </section>
 </template>
 

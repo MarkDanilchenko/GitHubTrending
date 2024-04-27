@@ -1,6 +1,6 @@
 <template>
     <section class="my-home-page">
-        <router-link to="/main" class="nav-link" alt="Main page" title="Main page">
+        <router-link to="/main" class="" alt="Main page" title="Main page">
             <div class="d-flex  justify-content-center align-items-center">
                 <!-- .dots animation -->
                 <!-- .dots animation -->
@@ -146,13 +146,4 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-p {
-    font-size: 25px;
-    line-height: 1.5;
-
-    span {
-        font-size: 50px;
-    }
-}
-</style>
+<style scoped lang="scss"></style>

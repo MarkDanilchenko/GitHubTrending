@@ -10,7 +10,7 @@
 
 2. What kind of repositories are used to be pulled?
 
-    >Any kind of repositories with only one exeption: **Language of repository should be: [JavaScript, Ruby, Python]**
+    >Any kind of repositories with only one exeption: **Language of repository should be: [JavaScript, Ruby, Python].**
 
 3. What is the recovery time of auto synchronization?
 
@@ -18,14 +18,14 @@
 
 4. Repositories based on what of the three languages (mentioned above) the auto synchronization does itself?
 
-    >Auto synchronization consecutively pulled perositories: [python > ruby > javascript].
+    >Auto synchronization consecutively pulled perositories in sequence: [python > ruby > javascript].
 
 5. Is it possible to choose, which of three repository to pull manually?
 
     >Yes, one of three repositories, which is mentioned above. <br>*Request should contain body data, as in example:<br> ```
     { "language": "python" }```*.
 
-6. Is it possible to stop/start again auto synchronization?
+6. Is it possible to stop/start auto synchronization?
 
     >Yes.
 
@@ -35,7 +35,7 @@ Technologies used:
 
 - **Backend**:
   - NodeJS (ExpressJS);
-  - MongoDB (mongoose);
+  - MongoDB (mongoose) - cause we have not any relationships in database;
   - Insomnia (for API test);
   - NGINX <span style="font-size: smaller">(in progress...);</span>
   - Docker + Compose <span style="font-size: smaller">(in progress...);</span>

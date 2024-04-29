@@ -14,6 +14,8 @@ router.route('/repos_single/:nameOrId').get(syncController.getTrendingReposExact
 router.route('/stop_auto_sync').get(syncController.stopAutoSync);
 // http://localhost:3000/api/v1/start_auto_sync
 router.route('/start_auto_sync').get(syncController.startAutoSync);
+// http://localhost:3000/api/v1/status_auto_sync
+router.route('/status_auto_sync').get(syncController.statusAutoSync);
 
 // --------------------------------------EXPORT
 module.exports = { router };

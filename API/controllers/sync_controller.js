@@ -106,21 +106,20 @@ class SyncController {
 				res.json({ message: 'Auto sync disabled!' });
 				res.end();
 			} else {
-				res.status(200);
+				res.status(208);
 				res.json({ message: 'Auto sync already disabled!' });
 				res.end();
 			}
 		} catch (error) {
-			console.log(error);
+			console.log('Error: ' + error.message);
 			res.status(500);
-			res.json({ message: 'Error: ' + error.message });
 			res.end();
 		}
 	}
 	async startAutoSync(req, res) {
 		try {
 			if (autoSync.autoSyncTimer._idleTimeout > 0) {
-				res.status(200);
+				res.status(208);
 				res.json({ message: 'Auto sync already enabled!' });
 				res.end();
 			} else {
@@ -130,9 +129,25 @@ class SyncController {
 				res.end();
 			}
 		} catch (error) {
-			console.log(error);
+			console.log('Error: ' + error.message);
 			res.status(500);
-			res.json({ message: 'Error: ' + error.message });
+			res.end();
+		}
+	}
+	async statusAutoSync(req, res) {
+		try {
+			if (autoSync.autoSyncTimer._idleTimeout > 0) {
+				res.status(200);
+				res.json({ status: 'enabled' });
+				res.end();
+			} else {
+				res.status(200);
+				res.json({ status: 'disabled' });
+				res.end();
+			}
+		} catch (error) {
+			console.log('Error: ' + error.message);
+			res.status(500);
 			res.end();
 		}
 	}

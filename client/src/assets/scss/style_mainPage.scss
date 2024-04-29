@@ -23,6 +23,7 @@
 		}
 		li:not(ul li):last-child {
 			font-style: normal;
+			font-size: 14px;
 		}
 		ul li {
 			font-size: 14px;
@@ -62,3 +63,8 @@
 	}
 }
 // styles: block__content
+#block__content {
+	button{
+		width: 90px;
+	}
+}

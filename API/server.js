@@ -1,6 +1,8 @@
 // --------------------------------------SERVER_CONFIG
 const express = require('express');
 const app = express();
+const cors = require('cors');
+app.use(cors());
 const { router: apiRouter } = require('./routes/router.js');
 
 // --------------------------------------COMMON_MIDDLEWARE

@@ -13,11 +13,11 @@
                     <img src="@/assets/IMG/Ruby_logo.png" alt="Ruby logo" title="Ruby logo">
                 </div>
                 <div id="description__card" class="border border-2 rounded rounded-3 shadow p-3">
-                    <h3 class="text-center mb-3">App description</h3>
+                    <h3 class="text-center mb-3">App <span class="text-green">description</span></h3>
                     <ol>
                         <li>What is defined under trending repositories?</li>
                         <ul>
-                            <li>First 💯 repositories with the highest amount of ✰✰✰.</li>
+                            <li>First 💯 repositories with the highest amount of &#127775;&#127775;&#127775;.</li>
                         </ul>
                         <li>What kind of repositories are used to be pulled?</li>
                         <ul>
@@ -63,7 +63,7 @@
                 </div>
             </div>
         </div>
-        <div id="block__content" class="row mt-5">
+        <div id="block__content" class="row mt-3">
             <hr style="width: 50%; margin-left: 25%;">
             <div
                 class="col-md-4 offset-md-0 col-10 offset-1 d-flex flex-column align-items-center justify-content-start">
@@ -124,29 +124,32 @@
                     </div>
                 </div>
                 <div class="control_box shadow-sm p-3 mb-3">
-                    <button class="btn btn-outline-green-custom btn-sm me-1" @click="sync">Sync</button>
+                    <div class="text-center mb-3 me-md-0 me-3">
+                        <span class="text-center text-small">Search <b>exact repository</b> (from pulled)</span>
+                    </div>
+                    <div class="d-flex flex-column align-items-center justify-content-center">
+                        <input type="text" id="search_repository" class="form-control form-control-sm"
+                            aria-describedby="searchRepositoryInput" placeholder="&#128269;" v-model="searchRepo">
+                        <p class="text-center text-small text-muted">Enter <i>name</i> or specific <i>Git-ID</i> of the
+                            repository</p>
+                        <button class="btn btn-outline-green-custom btn-sm me-1" @click="loadTrendingReposExact"
+                            :disabled="searchRepo === ''">Search</button>
+                    </div>
                 </div>
                 <div class="control_box shadow-sm p-3 mb-3">
-                    <button class="btn btn-outline-green-custom btn-sm me-1" @click="sync">Sync</button>
+                    <div class="text-center mb-3 me-md-0 me-3">
+                        <span class="text-center text-small">Browse <b>all repositories</b></span>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button id="getTrendingRepos_btn" class="btn btn-outline-green-custom btn-sm me-1"
+                            @click="loadTrendingRepos">All repositories</button>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-8 offset-sm-0 col-10 offset-1">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Rem quaerat quos nam nihil dolorem omnis molestiae in cumque nesciunt itaque dolorum maxime amet, earum
-                quisquam fugit aperiam cupiditate at quas?Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iure
-                dolore ratione dignissimos vero quaerat perferendis delectus architecto, voluptate enim nesciunt cumque
-                nemo, aperiam ipsam ut inventore aliquam, temporibus officia? Impedit!
-                Eligendi eveniet perspiciatis expedita culpa mollitia dolorem omnis cum delectus et debitis aspernatur
-                corporis quia quod in cupiditate, facere quam unde placeat officia atque? Deleniti unde aperiam
-                voluptatum explicabo facere!
-                Expedita laudantium error eos praesentium! Est quibusdam eveniet aperiam cum amet quis molestias ipsam,
-                quidem neque mollitia explicabo odio consectetur accusantium inventore magnam voluptatibus pariatur ex
-                tempore. Tenetur, ipsa quasi?
-                Neque minima nihil odio commodi tenetur enim. Aperiam odio accusantium facere doloremque minus,
-                exercitationem illo dolor alias odit quis sequi ipsum ullam soluta quam, adipisci libero, minima animi
-                pariatur repellat.
-                Esse illo perferendis, quas id quisquam unde accusamus vel eius, repudiandae recusandae quam animi
-                explicabo ex ut, quidem reprehenderit. Vero nihil laborum amet corrupti necessitatibus ea quibusdam,
-                enim error recusandae?</div>
+            <div class="col-md-8 offset-md-0 col-10 offset-1 shadow-sm p-3">
+                <component :is="activeComponent"
+                    :detailedRepo="activeComponent == 'DetailedRepo' ? detailedRepo : null" />
+            </div>
         </div>
     </section>
 </template>
@@ -155,14 +158,27 @@
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
 import animation_scrollDown from '@/mixins/animation_scrollDown.js';
 import animation_descriptionCardLogos from '@/mixins/animation_descriptionCardLogos.js';
+import animation_getTrendingRepos_btn from '@/mixins/animation_getTrendingRepos_btn.js';
+import ListRepo from '@/components/ListRepo.vue';
+import DetailedRepo from '@/components/DetailedRepo.vue';
+import TemplateRepo from '@/components/TemplateRepo.vue';
 export default {
     name: 'Main_page',
+    mixins: [animation_scrollDown, animation_descriptionCardLogos, animation_getTrendingRepos_btn],
+    components: {
+        ListRepo,
+        DetailedRepo,
+        TemplateRepo
+    },
     data() {
         return {
             languageToSync: 'Select language...',
+            searchRepo: '',
+            // template for repositories part, by default
+            activeComponent: 'TemplateRepo',
+            detailedRepo: null,
         }
     },
-    mixins: [animation_scrollDown, animation_descriptionCardLogos],
     computed: {
         ...mapState({
             autoSyncStatus: state => state.git_autoSync.autoSyncStatus
@@ -175,8 +191,25 @@ export default {
             stopAutoSync: 'git_autoSync/stopAutoSync',
             statusAutoSync: 'git_autoSync/statusAutoSync',
             syncTrendingRepos: 'git_autoSync/syncTrendingRepos',
+            getTrendingReposExact: 'git_autoSync/getTrendingReposExact',
+            getTrendingRepos: 'git_autoSync/getTrendingRepos',
         }),
         ...mapMutations({}),
+        loadTrendingReposExact() {
+            this.getTrendingReposExact({
+                nameOrId: `${this.searchRepo}`
+            }).then((response) => {
+                this.searchRepo = '';
+                this.detailedRepo = response.data;
+                this.activeComponent = 'DetailedRepo';
+            }).catch((error) => {
+                alert(error.response.data.message);
+                console.log(error.response.data.message);
+            });
+        },
+        loadTrendingRepos() {
+            this.getTrendingRepos()
+        },
         manualSync() {
             document.getElementById('manualSyncStatus').innerHTML = `
             <div class="spinner-border spinner-border-sm text-green" role="status">

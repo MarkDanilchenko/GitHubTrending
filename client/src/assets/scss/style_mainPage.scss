@@ -1,3 +1,16 @@
+// mixins
+@mixin fontCustom {
+	// font mixin for any headers or logos with green inserts with <span>text</span>
+	text-transform: uppercase;
+	letter-spacing: 0.5em;
+	line-height: 1.5em;
+	text-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+	font-size: clamp(16px, 1.5vw, 30px);
+	span {
+		font-size: clamp(32px, 2vw, 30px);
+	}
+}
+
 // styles: block__description
 #block__description {
 	min-height: 95vh;
@@ -14,6 +27,9 @@
 	position: relative;
 	z-index: 10;
 	background-color: var(--bs-body-bg);
+	h3 {
+		@include fontCustom;
+	}
 	ol {
 		list-style-type: none;
 		li:not(ul li) {
@@ -31,14 +47,7 @@
 	}
 }
 #block__description > div > div:first-child {
-	text-transform: uppercase;
-	letter-spacing: 0.5em;
-	line-height: 1.5em;
-	text-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
-	font-size: clamp(16px, 1.5vw, 30px);
-	span {
-		font-size: clamp(32px, 2vw, 30px);
-	}
+	@include fontCustom;
 }
 // styles: block__scroll
 #scrollDownBtn {
@@ -64,13 +73,46 @@
 }
 // styles: block__content
 #block__content {
-	.control_box{
+	.control_box {
 		width: 100%;
 	}
 	button {
 		min-width: 90px;
 	}
-	#manualSyncStatus{
-		min-width: 90px;
+}
+#manualSyncStatus {
+	min-width: 90px;
+}
+#search_repository {
+	max-width: 60%;
+}
+.my-template-repo,
+.my-detailed-repo {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.my-template-repo > div > div:first-child,
+.my-detailed-repo > #notFound_repo > div {
+	@include fontCustom;
+}
+#detailedCard_repo {
+	h3 {
+		@include fontCustom;
+	}
+	ul li {
+		list-style-type: square;
+		padding-left: 15px;
+		list-style-image: linear-gradient(to right, $green_color, $green_color_05);
+		font-family: 'Handlee', cursive;
+		font-weight: 400;
+		font-style: normal;
+	}
+	ul li:first-child {
+		text-transform: uppercase;
+		span:first-of-type {
+			font-weight: bolder;
+		}
 	}
 }

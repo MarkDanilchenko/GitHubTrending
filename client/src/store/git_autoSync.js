@@ -81,7 +81,17 @@ export const git_autoSync = {
 					Accept: 'application/json',
 				},
 			});
-            return result;
+			return result;
 		},
+		async getTrendingReposExact({ commit, state }, params) {
+			let result = await axios.get(`${APIURL}/api/v1/repos_single/${params.nameOrId}`, {
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+				},
+			});
+			return result;
+		},
+		async getTrendingRepos({ commit, state }) {},
 	},
 };

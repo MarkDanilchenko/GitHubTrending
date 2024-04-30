@@ -64,7 +64,13 @@
 }
 // styles: block__content
 #block__content {
-	button{
-		width: 90px;
+	.control_box{
+		width: 100%;
+	}
+	button {
+		min-width: 90px;
+	}
+	#manualSyncStatus{
+		min-width: 90px;
 	}
 }

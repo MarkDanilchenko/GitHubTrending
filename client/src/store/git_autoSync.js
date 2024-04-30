@@ -74,5 +74,14 @@ export const git_autoSync = {
 					console.log(error.message);
 				});
 		},
+		async syncTrendingRepos({ commit, state }, params) {
+			let result = await axios.post(`${APIURL}/api/v1/repos_sync`, params, {
+				headers: {
+					'Content-Type': 'application/json',
+					Accept: 'application/json',
+				},
+			});
+            return result;
+		},
 	},
 };

@@ -13,7 +13,7 @@ class SyncController {
 				return res.status(400).json({ message: 'Invalid or missing language! Valid languages are: [ python, ruby, javascript ]' });
 			}
 			// ----------------------refresh auto sync timer
-			autoSync.refreshTimer();
+			autoSync.autoSyncTimer._idleTimeout > 0 ? autoSync.refreshTimer() : null;
 			const result = await octokit.request('GET /search/repositories', {
 				q: `stars:>=10000 language:${req.body.language}`,
 				sort: 'stars',
@@ -41,11 +41,11 @@ class SyncController {
 					}).catch((error) => console.log(error));
 				}
 				res.status(200);
-				res.json({ message: 'Sync operation completed!' });
+				res.json({ message: 'Sync completed!' });
 				res.end();
 			} else {
 				res.status(500);
-				res.json({ message: 'Sync operation failed!' });
+				res.json({ message: 'Sync failed!' });
 				res.end();
 			}
 		} catch (error) {

@@ -77,12 +77,12 @@ class SyncController {
 			// }
 
 			// >>>AGGREGATE PAGINATION
-			const page = req.query.page ? parseInt(req.query.page) : 1;
-			const limit = req.query.limit ? parseInt(req.query.limit) : 10;
+			const page = req.query.page !== 'null' ? parseInt(req.query.page) : 1;
+			const limit = req.query.limit !== 'null' ? parseInt(req.query.limit) : 10;
+			const sortBy = req.query.sortBy !== 'null' ? req.query.sortBy : 'stargazers_count';
 			const skip = (page - 1) * limit;
-			const sortMethod = req.body.sortMethod ? req.body.sortMethod : 'stargazers_count';
 			let sortDirection = null;
-			switch (sortMethod) {
+			switch (sortBy) {
 				case 'stargazers_count':
 					sortDirection = -1;
 					break;
@@ -93,15 +93,15 @@ class SyncController {
 					sortDirection = 1;
 					break;
 			}
-			const result = await TrendingGitRepos.aggregate([{ $sort: { [sortMethod]: sortDirection } }, { $skip: skip }, { $limit: limit }]);
-			if (result.length === 0) {
+			const paginatedResult = await TrendingGitRepos.aggregate([{ $sort: { [sortBy]: sortDirection } }, { $skip: skip }, { $limit: limit }]);
+			if (paginatedResult.length === 0) {
 				res.status(200);
 				res.json({ message: 'No data found!' });
 				res.end();
 			} else {
 				res.status(200);
 				res.json({
-					data: result,
+					paginatedResult: paginatedResult,
 					pageInfo: {
 						page: page,
 						limit: limit,

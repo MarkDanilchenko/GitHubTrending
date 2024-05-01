@@ -94,7 +94,9 @@
 	align-items: center;
 }
 .my-template-repo > div > div:first-child,
-.my-detailed-repo > #notFound_repo > div {
+.my-detailed-repo > #notFound_repo > div,
+.my-list-repo > div:first-child,
+.notFound {
 	@include fontCustom;
 }
 #detailedCard_repo {
@@ -114,5 +116,30 @@
 		span:first-of-type {
 			font-weight: bolder;
 		}
+	}
+}
+
+.my-list-repo select {
+	max-width: 150px;
+	min-width: 100px;
+}
+
+.accordion-header {
+	button span:first-of-type {
+		text-transform: uppercase;
+	}
+	font-family: 'Handlee', cursive;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.accordion-header + div {
+	ul li {
+		list-style-type: square;
+		padding-left: 15px;
+		list-style-image: linear-gradient(to right, $green_color, $green_color_05);
+		font-family: 'Handlee', cursive;
+		font-weight: 400;
+		font-style: normal;
 	}
 }

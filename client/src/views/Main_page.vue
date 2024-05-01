@@ -147,8 +147,10 @@
                 </div>
             </div>
             <div class="col-md-8 offset-md-0 col-10 offset-1 shadow-sm p-3">
-                <component :is="activeComponent"
-                    :detailedRepo="activeComponent == 'DetailedRepo' ? detailedRepo : null" />
+                <transition name="APP_fadeComponent" mode="out-in">
+                    <component :is="activeComponent"
+                        :detailedRepo="activeComponent == 'DetailedRepo' ? detailedRepo : null" />
+                </transition>
             </div>
         </div>
     </section>
@@ -192,7 +194,6 @@ export default {
             statusAutoSync: 'git_autoSync/statusAutoSync',
             syncTrendingRepos: 'git_autoSync/syncTrendingRepos',
             getTrendingReposExact: 'git_autoSync/getTrendingReposExact',
-            getTrendingRepos: 'git_autoSync/getTrendingRepos',
         }),
         ...mapMutations({}),
         loadTrendingReposExact() {
@@ -203,12 +204,12 @@ export default {
                 this.detailedRepo = response.data;
                 this.activeComponent = 'DetailedRepo';
             }).catch((error) => {
-                alert(error.response.data.message);
                 console.log(error.response.data.message);
+                alert(error.response.data.message);
             });
         },
         loadTrendingRepos() {
-            this.getTrendingRepos()
+            this.activeComponent = 'ListRepo';
         },
         manualSync() {
             document.getElementById('manualSyncStatus').innerHTML = `

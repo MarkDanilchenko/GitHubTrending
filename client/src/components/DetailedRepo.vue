@@ -11,7 +11,7 @@
             <h3 class="text-end mb-3"><span class="text-green">About</span> repository:</h3>
             <ul>
                 <li>
-                    <span class="text-green">{{ detailedRepo.name }}</span>, <span class="text-small">by {{
+                    <span class="text-green">{{ detailedRepo.name }}</span><span class="text-small">, by {{
             detailedRepo.owner_login }}</span>
                 </li>
                 <li>Inner GitID: {{ detailedRepo.git_id }}</li>
@@ -41,10 +41,21 @@ export default {
     name: 'DetailedRepo',
     props: {
         detailedRepo: {
-            type: Object
+            type: Object,
+            default: {}
         }
     },
-    mixins: [animation_detailedRepoCard]
+    watch: {
+        detailedRepo: {
+            handler(newValue) {
+                this.$nextTick(() => {
+                    // applyAnimation() is defined into the mixin!
+                    this.applyAnimation();
+                });
+            },
+        },
+    },
+    mixins: [animation_detailedRepoCard],
 }
 </script>
 

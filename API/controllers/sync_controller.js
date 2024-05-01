@@ -57,16 +57,99 @@ class SyncController {
 	}
 	async getTrendingRepos(req, res) {
 		try {
-			let result = await TrendingGitRepos.find({}).sort({ stargazers_count: -1 });
+			// >>>CURSOR-BASED PAGINATION
+			// let query = {};
+			// if (req.query.cursor) {
+			// 	query = { _id: { $gt: req.query.cursor } };
+			// }
+			// const result = await TrendingGitRepos.find(query).sort({ _id: 1 }).limit(11);
+			// if (result.length === 0) {
+			// 	res.status(200);
+			// 	res.json({ message: 'No data found!' });
+			// 	res.end();
+			// } else {
+			// 	res.status(200);
+			// 	res.json({
+			// 		data: result,
+			// 		cursor: result[result.length - 1]._id,
+			// 	});
+			// 	res.end();
+			// }
+
+			// >>>AGGREGATE PAGINATION
+			const page = req.query.page ? parseInt(req.query.page) : 1;
+			const limit = req.query.limit ? parseInt(req.query.limit) : 10;
+			const skip = (page - 1) * limit;
+			const sortMethod = req.body.sortMethod ? req.body.sortMethod : 'stargazers_count';
+			let sortDirection = null;
+			switch (sortMethod) {
+				case 'stargazers_count':
+					sortDirection = -1;
+					break;
+				case 'name':
+					sortDirection = 1;
+					break;
+				case 'language':
+					sortDirection = 1;
+					break;
+			}
+			const result = await TrendingGitRepos.aggregate([{ $sort: { [sortMethod]: sortDirection } }, { $skip: skip }, { $limit: limit }]);
 			if (result.length === 0) {
 				res.status(200);
 				res.json({ message: 'No data found!' });
 				res.end();
 			} else {
 				res.status(200);
-				res.json(result);
+				res.json({
+					data: result,
+					pageInfo: {
+						page: page,
+						limit: limit,
+						totalItems: await TrendingGitRepos.countDocuments({}),
+						totalPages: Math.ceil((await TrendingGitRepos.countDocuments({})) / limit),
+						previousPage: page > 1 ? page - 1 : null,
+						nextPage: page < Math.ceil((await TrendingGitRepos.countDocuments({})) / limit) ? page + 1 : null,
+					},
+				});
 				res.end();
 			}
+
+			// >>>SIMPLE SKIPLIMIT PAGINATION
+			// const page = req.query.page ? parseInt(req.query.page) : 1;
+			// const limit = req.query.limit ? parseInt(req.query.limit) : 10;
+			// const skip = (page - 1) * limit;
+			// const result = await TrendingGitRepos.find({}).sort({ stargazers_count: -1 }).skip(skip).limit(limit);
+			// if (result.length === 0) {
+			// 	res.status(200);
+			// 	res.json({ message: 'No data found!' });
+			// 	res.end();
+			// } else {
+			// 	res.status(200);
+			// 	res.json({
+			// 		data: result,
+			// 		pageInfo: {
+			// 			page: page,
+			// 			limit: limit,
+			// 			totalItems: await TrendingGitRepos.countDocuments({}),
+			// 			totalPages: Math.ceil((await TrendingGitRepos.countDocuments({})) / limit),
+			// 			prevPage: page > 1 ? page - 1 : null,
+			// 			nextPage: page < Math.ceil((await TrendingGitRepos.countDocuments({})) / limit) ? page + 1 : null,
+			// 		},
+			// 	});
+			// 	res.end();
+			// }
+
+			// >>>WITHOUT PAGINATION
+			// let result = await TrendingGitRepos.find({}).sort({ stargazers_count: -1 });
+			// if (result.length === 0) {
+			// 	res.status(200);
+			// 	res.json({ message: 'No data found!' });
+			// 	res.end();
+			// } else {
+			// 	res.status(200);
+			// 	res.json(result);
+			// 	res.end();
+			// }
 		} catch (error) {
 			console.log(error);
 			res.status(500);

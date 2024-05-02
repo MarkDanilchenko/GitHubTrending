@@ -13,7 +13,7 @@ services:
             - 8080:80
         networks:
             - backend # for nginx if proxy is needed to containers' connections
-            - frontend # for nginx if proxy is not neede (all requests goes from frontend to backend containers with defined urls in .vue components)
+            - frontend # for nginx if proxy is not needed (all requests goes from frontend to backend containers with defined urls in .vue components)
         depends_on:
             api:
                 condition: service_healthy
@@ -35,7 +35,13 @@ services:
         links:
             - db
         depends_on:
-            - db
+            db:
+                condition: service_healthy
+        healthcheck:
+            test: ['CMD', 'curl', '-f', 'http://${SERVER_HOST}:3000/']
+            interval: 10s
+            timeout: 5s
+            retries: 3
 
     # ------------------------------------------------------db(mongodb)
     db:
@@ -49,13 +55,16 @@ services:
         networks:
             - backend
         volumes:
-            - ./API/dump:/dump
             - ./API/db_data:/data/db
+        healthcheck:
+            test: ['CMD', 'mongosh', '--eval', 'db.adminCommand({ping: 1})']
+            interval: 10s
+            timeout: 5s
+            retries: 3
 
     # ------------------------------------------------------other(volumes && networks)
 volumes:
     db_data:
-    dump:
 networks:
     backend:
     frontend:

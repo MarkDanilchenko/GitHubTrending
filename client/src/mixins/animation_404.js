@@ -1,10 +1,13 @@
+// yoyo - forward and backward
+// transformOrigin - set animation start point to the center of the element
+// .fromTo() - set animation from state to another state
 import gsap from 'gsap';
+
 export default {
 	mounted() {
 		gsap.to('#headStripe', {
 			y: 1,
 			rotation: 3,
-			// yoyo - forward and backward
 			yoyo: true,
 			repeat: -1,
 			ease: 'sine.inOut',
@@ -38,7 +41,6 @@ export default {
 			repeat: -1,
 			duration: 1,
 			ease: 'sine.inOut',
-			// transformOrigin - set animation start point to the center of the element
 			transformOrigin: '50% 50%',
 		});
 		gsap.to('#starsBig g', {
@@ -49,7 +51,6 @@ export default {
 			duration: 0.8,
 			ease: 'sine.inOut',
 		});
-		// .fromTo() - set animation from state to another state
 		gsap.fromTo('#starsSmall g', { scale: 0, transformOrigin: '50% 50%' }, { scale: 1.2, transformOrigin: '50% 50%', yoyo: true, repeat: -1, duration: 0.5, ease: 'sine.inOut', stagger: 0.2 });
 		gsap.to('#circlesSmall circle', {
 			y: -3,

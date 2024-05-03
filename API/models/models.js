@@ -2,7 +2,7 @@
 const { mongoose } = require('./db.js');
 const Schema = mongoose.Schema;
 
-// --------------------------------------SCHEMA
+// --------------------------------------SCHEMAS
 const TrendingGitReposSchema = new Schema(
 	{
 		full_name: {

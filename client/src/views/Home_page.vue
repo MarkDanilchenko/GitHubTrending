@@ -2,11 +2,11 @@
     <section class="my-home-page">
         <router-link to="/main" class="" alt="Main page" title="Main page">
             <div class="d-flex  justify-content-center align-items-center">
-                <!-- .dots animation -->
-                <!-- .dots animation -->
-                <!-- .dots animation -->
                 <div class="text-center lead">
                     <div class="mod">
+                        <!-- .dots animation -->
+                        <!-- .dots animation -->
+                        <!-- .dots animation -->
                         <div class="cube">
                             <div class="faces f1">
                                 <div class="dot p1"></div>
@@ -105,6 +105,9 @@
                                 <div class="dot p9"></div>
                             </div>
                         </div>
+                        <!-- text above the dots -->
+                        <!-- text above the dots -->
+                        <!-- text above the dots -->
                         <div class="project-name">
                             <p><span class="text-green">Find out</span> <br /> the most trending projects on GitHub</p>
                         </div>
@@ -118,7 +121,7 @@
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex';
 export default {
-    name: 'Label_page',
+    name: 'Home_page',
     computed: {
         ...mapState({
             colorMode: state => state.color_mode.colorMode

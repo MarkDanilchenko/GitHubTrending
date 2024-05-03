@@ -1,11 +1,20 @@
 <template>
   <div class="container">
+    <!-- header - navbar -->
+    <!-- header - navbar -->
+    <!-- header - navbar -->
     <Navbar />
+    <!-- body -->
+    <!-- body -->
+    <!-- body -->
     <router-view v-slot="{ Component }">
       <transition name="APP_fadeComponent" mode="out-in">
         <component :is="Component" />
       </transition>
     </router-view>
+    <!-- footer -->
+    <!-- footer -->
+    <!-- footer -->
     <Footer v-if="$route.path !== '/'" />
   </div>
 </template>

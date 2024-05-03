@@ -1,9 +1,18 @@
 <template>
     <section class="my-list-repo">
+        <!-- header -->
+        <!-- header -->
+        <!-- header -->
         <div class="text-center">
             <span class="text-green">All pulled</span><br> repositories
         </div>
+        <!-- content -->
+        <!-- content -->
+        <!-- content -->
         <div class="mt-5">
+            <!-- selects filters -->
+            <!-- selects filters -->
+            <!-- selects filters -->
             <div class="d-flex justify-content-end align-items-center">
                 <div class="me-3">
                     <span class="text-small text-muted">Items per page:</span>
@@ -25,26 +34,37 @@
                 </div>
             </div>
             <hr style="width: 75%; margin-left: 25%;">
+            <!-- not found -->
+            <!-- not found -->
+            <!-- not found -->
             <div v-if="notFound" class="notFound">
                 <p class="text-center mt-5">No repositories found =\</p>
             </div>
+            <!-- list of repositories -->
+            <!-- list of repositories -->
+            <!-- list of repositories -->
             <div v-else>
                 <p class="text-small text-end">Total amount of repositories: <span class="text-green"><b>{{ totalItems
                             }}</b></span></p>
+                <!-- accordion -->
+                <!-- accordion -->
+                <!-- accordion -->
                 <div class="accordion" id="reposAccordion">
                     <ItemRepo v-for="repo, index in paginatedResult" :key="repo._id" :repo="repo" :index="index">
                     </ItemRepo>
                 </div>
+                <!-- pagination -->
+                <!-- pagination -->
+                <!-- pagination -->
                 <div class="d-flex justify-content-center my-3">
                     <Paginate v-model="page" :page-count="totalPages" :page-range="3" :margin-pages="1"
                         :break-view-text="'...'" :first-last-button="true" :prev-text="'<'" :next-text="'>'"
                         :first-button-text="'<<'" :last-button-text="'>>'" :container-class="'pagination'"
                         :page-class="'page-item'"></Paginate>
-                    <!-- :click-handler="changePage" can be used in <Paginate> -->
+                    <!-- :click-handler="changePage" can be used in <Paginate> instead of watch hook -->
                 </div>
             </div>
         </div>
-
     </section>
 </template>
 

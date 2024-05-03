@@ -1,17 +1,29 @@
 <template>
     <section class="my-main-page">
+        <!-- description block -->
+        <!-- description block -->
+        <!-- description block -->
         <div id="block__description" class="row">
             <div class="col-md-8 offset-md-2 col-10 offset-1 d-flex flex-column align-items-center mt-3">
+                <!-- description header -->
+                <!-- description header -->
+                <!-- description header -->
                 <div class="px-5 text-center">
                     Check <span class="text-green">GitHub API</span> and pull <span class="text-green">trending
                         repositories</span>.
                 </div>
+                <!-- description 4 logos -->
+                <!-- description 4 logos -->
+                <!-- description 4 logos -->
                 <div id="logos">
                     <img src="@/assets/IMG/GitHub_logo.png" alt="GitHub logo" title="GitHub logo">
                     <img src="@/assets/IMG/Python_logo.png" alt="Python logo" title="Python logo">
                     <img src="@/assets/IMG/JavaScript_logo.png" alt="JavaScript logo" title="JavaScript logo">
                     <img src="@/assets/IMG/Ruby_logo.png" alt="Ruby logo" title="Ruby logo">
                 </div>
+                <!-- description card -->
+                <!-- description card -->
+                <!-- description card -->
                 <div id="description__card" class="border border-2 rounded rounded-3 shadow p-3">
                     <h3 class="text-center mb-3">App <span class="text-green">description</span></h3>
                     <ol>
@@ -55,6 +67,9 @@
                 </div>
             </div>
         </div>
+        <!-- scroll button -->
+        <!-- scroll button -->
+        <!-- scroll button -->
         <div id="block__scroll" class="row">
             <div class="col-12 d-flex justify-content-center align-items-center d-sm-block d-none">
                 <div id="scrollDownBtn" @click="scrollDown">
@@ -63,10 +78,19 @@
                 </div>
             </div>
         </div>
+        <!-- content block -->
+        <!-- content block -->
+        <!-- content block -->
         <div id="block__content" class="row mt-3">
             <hr style="width: 50%; margin-left: 25%;">
+            <!-- control boxes -->
+            <!-- control boxes -->
+            <!-- control boxes -->
             <div
                 class="col-md-4 offset-md-0 col-10 offset-1 d-flex flex-column align-items-center justify-content-start">
+                <!-- start/stop/status auto synchronization -->
+                <!-- start/stop/status auto synchronization -->
+                <!-- start/stop/status auto synchronization -->
                 <div class="control_box shadow-sm p-3 mb-3">
                     <div class="text-center mb-3 me-md-0 me-3">
                         <span v-if="autoSyncStatus" class="text-center text-small">&#128994; Auto synchronization is
@@ -82,10 +106,16 @@
                         <button class="btn btn-outline-danger btn-sm" @click="stopAutoSync">Disable</button>
                     </div>
                 </div>
+                <!-- manual synchronization -->
+                <!-- manual synchronization -->
+                <!-- manual synchronization -->
                 <div class="control_box shadow-sm p-3 mb-3">
                     <div class="text-center mb-3 me-md-0 me-3">
                         <span class="text-center text-small"><b>Manual</b> synchronization</span>
                     </div>
+                    <!-- radio buttons -->
+                    <!-- radio buttons -->
+                    <!-- radio buttons -->
                     <div class="d-flex flex-column align-items-start">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="inlineRadioOptions"
@@ -115,14 +145,20 @@
                             </label>
                         </div>
                     </div>
+                    <!-- button with status -->
+                    <!-- button with status -->
+                    <!-- button with status -->
                     <div class="d-flex justify-content-center align-items-center">
                         <button class="btn btn-outline-green-custom btn-sm me-1" @click="manualSync"
                             :disabled="languageToSync === 'Select language...'">Sync</button>
-                        <div id="manualSyncStatus" class="text-center text-small border-start border-5 ps-3"><i
-                                class="text-muted"> {{
-                    languageToSync }} </i></div>
+                        <div id="manualSyncStatus" class="text-center text-small border-start border-5 ps-3">
+                            <i class="text-muted"> {{ languageToSync }} </i>
+                        </div>
                     </div>
                 </div>
+                <!-- search repository -->
+                <!-- search repository -->
+                <!-- search repository -->
                 <div class="control_box shadow-sm p-3 mb-3">
                     <div class="text-center mb-3 me-md-0 me-3">
                         <span class="text-center text-small">Search <b>exact repository</b> (from pulled)</span>
@@ -136,6 +172,9 @@
                             :disabled="searchRepo === ''">Search</button>
                     </div>
                 </div>
+                <!-- browse all repositories -->
+                <!-- browse all repositories -->
+                <!-- browse all repositories -->
                 <div class="control_box shadow-sm p-3 mb-3">
                     <div class="text-center mb-3 me-md-0 me-3">
                         <span class="text-center text-small">Browse <b>all repositories</b></span>
@@ -146,6 +185,9 @@
                     </div>
                 </div>
             </div>
+            <!-- content -->
+            <!-- content -->
+            <!-- content -->
             <div class="col-md-8 offset-md-0 col-10 offset-1 shadow-sm p-3">
                 <transition name="APP_fadeComponent" mode="out-in">
                     <component :is="activeComponent"
@@ -176,7 +218,6 @@ export default {
         return {
             languageToSync: 'Select language...',
             searchRepo: '',
-            // template for repositories part, by default
             activeComponent: 'TemplateRepo',
             detailedRepo: null,
         }
@@ -185,7 +226,6 @@ export default {
         ...mapState({
             autoSyncStatus: state => state.git_autoSync.autoSyncStatus
         }),
-        ...mapGetters({}),
     },
     methods: {
         ...mapActions({
@@ -195,7 +235,6 @@ export default {
             syncTrendingRepos: 'git_autoSync/syncTrendingRepos',
             getTrendingReposExact: 'git_autoSync/getTrendingReposExact',
         }),
-        ...mapMutations({}),
         loadTrendingReposExact() {
             this.getTrendingReposExact({
                 nameOrId: `${this.searchRepo}`

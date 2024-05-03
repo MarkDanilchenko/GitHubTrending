@@ -1,5 +1,8 @@
 <template>
     <section class="my-detailed-repo">
+        <!-- searched repository not found -->
+        <!-- searched repository not found -->
+        <!-- searched repository not found -->
         <div id="notFound_repo" v-if="detailedRepo.message">
             <div class="text-center">
                 Oops! Seems like
@@ -7,6 +10,9 @@
                 Please, specify Your request and try again.
             </div>
         </div>
+        <!-- searched repository -->
+        <!-- searched repository -->
+        <!-- searched repository -->
         <div id="detailedCard_repo" v-else class="rounded rounded-3 shadow shadow-lg p-3">
             <h3 class="text-end mb-3"><span class="text-green">About</span> repository:</h3>
             <ul>
@@ -48,8 +54,12 @@ export default {
     watch: {
         detailedRepo: {
             handler(newValue) {
+                // The watcher is called before the DOM is updated,
+                // so we have to wait until the DOM is updated before applying the animation.
+                // That's why we use $nextTick() which waits until the DOM is updated
+                // and then runs the function passed to it.
                 this.$nextTick(() => {
-                    // applyAnimation() is defined into the mixin!
+                    // applyAnimation() is defined directly into the mixin!
                     this.applyAnimation();
                 });
             },

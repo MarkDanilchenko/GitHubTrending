@@ -20,7 +20,7 @@ let autoSync = require('./controllers/autosync.js');
 				} else {
 					console.log(`Server running at http://${host_server}:${port_server}/`);
 				}
-				// --------------------------------------auto sync start
+				// auto sync start
 				autoSync.startTimer();
 			});
 		});

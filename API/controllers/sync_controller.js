@@ -1,18 +1,17 @@
-// --------------------------------------CONTROLLER_SYNC_CONFIG
+// --------------------------------------SYNC_CONFIG
 const { Octokit } = require('octokit');
 const octokit = new Octokit({});
-const { validationResult } = require('express-validator');
 const { TrendingGitRepos } = require('../models/models.js');
 let autoSync = require('./autosync.js');
 
-// --------------------------------------CONTROLLER_SYNC
+// --------------------------------------SYNC_CONTROLLER
 class SyncController {
 	async syncTrendingRepos(req, res) {
 		try {
 			if (req.body.language === undefined || !['python', 'ruby', 'javascript'].includes(req.body.language)) {
 				return res.status(400).json({ message: 'Invalid or missing language! Valid languages are: [ python, ruby, javascript ]' });
 			}
-			// ----------------------refresh auto sync timer
+			// refresh auto sync timer
 			autoSync.autoSyncTimer._idleTimeout > 0 ? autoSync.refreshTimer() : null;
 			const result = await octokit.request('GET /search/repositories', {
 				q: `stars:>=10000 language:${req.body.language}`,
@@ -57,25 +56,6 @@ class SyncController {
 	}
 	async getTrendingRepos(req, res) {
 		try {
-			// >>>CURSOR-BASED PAGINATION
-			// let query = {};
-			// if (req.query.cursor) {
-			// 	query = { _id: { $gt: req.query.cursor } };
-			// }
-			// const result = await TrendingGitRepos.find(query).sort({ _id: 1 }).limit(11);
-			// if (result.length === 0) {
-			// 	res.status(200);
-			// 	res.json({ message: 'No data found!' });
-			// 	res.end();
-			// } else {
-			// 	res.status(200);
-			// 	res.json({
-			// 		data: result,
-			// 		cursor: result[result.length - 1]._id,
-			// 	});
-			// 	res.end();
-			// }
-
 			// >>>AGGREGATE PAGINATION
 			const page = req.query.page !== 'null' ? parseInt(req.query.page) : 1;
 			const limit = req.query.limit !== 'null' ? parseInt(req.query.limit) : 10;
@@ -114,6 +94,25 @@ class SyncController {
 				res.end();
 			}
 
+			// >>>CURSOR-BASED PAGINATION
+			// let query = {};
+			// if (req.query.cursor) {
+			// 	query = { _id: { $gt: req.query.cursor } };
+			// }
+			// const result = await TrendingGitRepos.find(query).sort({ _id: 1 }).limit(11);
+			// if (result.length === 0) {
+			// 	res.status(200);
+			// 	res.json({ message: 'No data found!' });
+			// 	res.end();
+			// } else {
+			// 	res.status(200);
+			// 	res.json({
+			// 		data: result,
+			// 		cursor: result[result.length - 1]._id,
+			// 	});
+			// 	res.end();
+			// }
+
 			// >>>SIMPLE SKIPLIMIT PAGINATION
 			// const page = req.query.page ? parseInt(req.query.page) : 1;
 			// const limit = req.query.limit ? parseInt(req.query.limit) : 10;
@@ -136,18 +135,6 @@ class SyncController {
 			// 			nextPage: page < Math.ceil((await TrendingGitRepos.countDocuments({})) / limit) ? page + 1 : null,
 			// 		},
 			// 	});
-			// 	res.end();
-			// }
-
-			// >>>WITHOUT PAGINATION
-			// let result = await TrendingGitRepos.find({}).sort({ stargazers_count: -1 });
-			// if (result.length === 0) {
-			// 	res.status(200);
-			// 	res.json({ message: 'No data found!' });
-			// 	res.end();
-			// } else {
-			// 	res.status(200);
-			// 	res.json(result);
 			// 	res.end();
 			// }
 		} catch (error) {

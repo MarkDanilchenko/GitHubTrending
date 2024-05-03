@@ -3,7 +3,7 @@ const { Octokit } = require('octokit');
 const octokit = new Octokit({});
 const { TrendingGitRepos } = require('../models/models.js');
 
-// --------------------------------------AUTOSYNC
+// --------------------------------------AUTOSYNC_CONTROLLER
 class AutoSync {
 	autoSyncTimer = null;
 	languages = ['python', 'ruby', 'javascript'];
@@ -12,9 +12,6 @@ class AutoSync {
 	run = async () => {
 		console.log('Auto sync is running:');
 		try {
-			// for (let i = 0; i < this.languages.length; i++) {
-			// 	console.log(`Syncing ${this.languages[i]}...`);
-			// }
 			for (const language of this.languages) {
 				console.log(`Syncing ${language}...`);
 				const result = await octokit.request('GET /search/repositories', {
@@ -28,6 +25,11 @@ class AutoSync {
 					},
 				});
 				if (result.status === 200) {
+					// If there are any existing records in the TrendingGitRepos collection
+					// whose language field matches the current language being synced
+					// (case insensitively), then delete all of them.
+					//
+					// This is needed for updating the records in the collection.
 					if ((await TrendingGitRepos.find({ language: { $regex: new RegExp(`^${language}$`, 'i') } })).length > 0) {
 						await TrendingGitRepos.deleteMany({ language: { $regex: new RegExp(`^${language}$`, 'i') } });
 					}

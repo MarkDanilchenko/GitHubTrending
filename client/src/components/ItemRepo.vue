@@ -1,6 +1,9 @@
 <template>
     <section class="my-item-repo">
         <div class="accordion-item">
+            <!-- accordion item header -->
+            <!-- accordion item header -->
+            <!-- accordion item header -->
             <h2 class="accordion-header">
                 <button v-if="index == 0" class="accordion-button" type="button" data-bs-toggle="collapse"
                     :data-bs-target="`#collapse${index}`" aria-expanded="true" :aria-controls="`collapse${index}`">
@@ -11,6 +14,9 @@
                     <span>{{ repo.name }}</span><span class="text-small">, by {{ repo.owner_login }}</span>
                 </button>
             </h2>
+            <!-- accordion item body -->
+            <!-- accordion item body -->
+            <!-- accordion item body -->
             <div v-if="index == 0" :id="`collapse${index}`" class="accordion-collapse collapse show"
                 data-bs-parent="#reposAccordion">
                 <div class="accordion-body d-flex flex-column">

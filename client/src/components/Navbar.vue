@@ -1,5 +1,8 @@
 <template>
     <section class="my-navbar">
+        <!-- navigation -->
+        <!-- navigation -->
+        <!-- navigation -->
         <nav class="navbar navbar-expand-md sticky-top bg-body">
             <div class="container-fluid mt-3">
                 <!-- navigation logo -->
@@ -15,10 +18,10 @@
                     aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                <!-- navigation collapsed sections -->
+                <!-- navigation collapsed sections -->
+                <!-- navigation collapsed sections -->
                 <div class="navbar-collapse collapse" id="navbarSupportedContent">
-                    <!-- navigation sections -->
-                    <!-- navigation sections -->
-                    <!-- navigation sections -->
                     <ul class="navbar-nav me-auto">
                         <!-- clock -->
                         <!-- clock -->

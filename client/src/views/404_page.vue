@@ -1,5 +1,8 @@
 <template>
     <section class="my-404-page">
+        <!-- 404 page -->
+        <!-- 404 page -->
+        <!-- 404 page -->
         <div class="row">
             <div class="col-md-6 align-self-center">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"

@@ -20,7 +20,7 @@ This service is to check GitHub API and pull basic information about the most tr
 
     >**By default** interval of auto synchronization with GitAPI is **1 hour**.
     >
-    >Changeable in file: with envs (AUTO_SYNC_TIME).
+    >Changeable with envs: `AUTO_SYNC_TIME=`
 
 5. Is it possible to manually pull repositories of chosen language?
 

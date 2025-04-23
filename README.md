@@ -1,106 +1,98 @@
-## App Description &#128196;
+## App Description &#128209;
 
-### <span style="text-align: center;">This is a service, that is able to check GitHub API and pull trending repositories.</span>
+This service is to check GitHub API and pull basic information about the most trending repositories using NodeJS(ExpressJS), Vue3 and MongoDB.
 
-<br>
+## About &#128204;
 
-1. What is defined under trending repositories?
+1. What is trending repositories?
 
-    >First &#128175; repositories with the highest amount of &#127775;&#127775;&#127775;.
+    >First &#128175; repositories with the highest &#127775;&#127775;&#127775;
 
 2. What kind of repositories are used to be pulled?
 
-    >Any kind of repositories with only one exeption: **Language of repository should be: [JavaScript, Ruby, Python].**
+    >Repositories based on **JavaScript, Typescript Ruby or Python**
 
 3. Does the auto synchronization implemented in the service?
 
-    >Yes.
+    &#9989;
 
-4. What is the recovery time of auto synchronization?
+4. What is auto synchronization interval ?
 
-    >**By default**, recovery time of auto synchronization with GitAPI is **1 hour**. You also can change it for your own purpose in file: ./.env (param: AUTO_SYNC_TIME).
+    >**By default** interval of auto synchronization with GitAPI is **1 hour**.
+    >
+    >Changeable in file: with envs (AUTO_SYNC_TIME).
 
-5. Repositories based on what of the three languages (mentioned above) the auto synchronization does itself?
+5. Is it possible to manually pull repositories of chosen language?
 
-    >Auto synchronization consecutively pulled perositories in sequence: [python > ruby > javascript].
-
-5. Is it possible to choose, which of three repository to pull manually?
-
-    >Yes, one of three repositories, which is mentioned above. <br>*Request should contain body data, as in example:<br> ```
-    { "language": "python" }```*.
+    &#9989;
 
 6. Is it possible to stop/start auto synchronization?
 
-    >Yes.
+    &#9989;
 
-## Launch instructions &#128196;
+## Launch instructions &#128190;
 
-Technologies used:
+&#9881; **Frontend**:
 
-- **Backend**:
-  - NodeJS (ExpressJS);
-  - MongoDB (mongoose) <span style="font-size: smaller">(cause we have not any relationships in database);</span>
-  - Insomnia <span style="font-size: smaller">(for testing API);</span>
-  - NGINX;
-  - Docker + Compose;
-- **Frontend**:
-  - Vue3 + Vuex + vue - router;
-  - Bootstrap5;
-  - Webpack;
-  - CSS/SCSS/HTML;
+- Vue3;
+- Vuex;
+- Bootstrap5;
+- Webpack;
+  
+&#9881; **Backend**:
+
+- ExpressJS;
+- MongoDB;
+- Mongoose;
+- Docker;
+- NGINX;
+- Jest;
+- Swagger;
+
+<div style="display: flex; justify-content: end;">
+  <p>Git and Docker should be installed locally on Your PC.</p>
+</div>
 
 ---
 
-1. Clone repository/archive to your **local folder**;
-2. Open Terminal and make sure You are in **local folder**:
+1. Clone repository to Your local path:
 
-    ```
-    cd '.../local_folder'
-    ```
+  ```sh
+  cd <your_local_path> && git clone <http/ssh-link>
+  ```
 
-3. Copy file dev.env and rename to .env in the same root directory:
+2. Run compose:
 
-    ```
-    cp dev.env .env
-    ```
+  ```sh
+  cd GitHubTrending && docker compose  --env-file ./.env.public -f ./compose.yaml up --build   
+  ```
 
-4. *(optional)* Open and follow the instructions in the new created .env file if you want *to specify server-host outer-server-port or outer-db-port for docker containers*;
+3. After the installation is complete the web-app will start on `http://localhost:<NGINX_WEBSERVER_PORT>`;
 
-5. For this step you should already have installed Docker and Compose on your PC. Start installation:
+4. Stop the web-app press in current terminal:
 
-    ```
-    docker compose up --build
-    ```
+  ```sh
+  Ctrl + C
+  # or
+  docker compose --env-file ./.env.public stop
+  ```
 
-- Installation can take some time, it depends on your PC resources;
-- After the installation is completed, the app will start automatically on 0.0.0.0:8080;
-- Open app using <http://0.0.0.0:8080> in your browser;
+5. Start again the web-app:
 
-6. To stop the app:
+  ```sh
+  docker compose --env-file ./.env.public start
+  ```
 
-    ```
-    Ctrl + C
-    ```
+6. To completely remove all related docker containers, docker images, volumes and related data:
 
-7. To **stop app** (stop all docker containers):
+  ```sh
+  docker compose --env-file ./.env.public down --volumes --rmi all
+  ```
 
-    ```
-    docker compose stop
-    ```
+  <span style="color: rgb(255, 0, 0)">After this step, it is need to go back to point №2 to run web-app again.</span>
 
-8. To **start app** (start all docker containers):
 
-    ```
-    docker compose start
-    ```
-
-9. To completely **remove** all created docker containers, images and volumes:
-
-   ```
-   docker compose down --volumes --rmi all
-   ```
-
-## API Endpoints &#128196;
+<!-- ## API Endpoints &#128196;
 
 1. **Test URL**:
 
@@ -167,44 +159,55 @@ Technologies used:
         <span align="center">
             <img src="./screenshots/api/ScrShot_7.png" width="50%" height="50%" alt='JSON response'>
         </span>
-    <br>
+    <br> -->
 
-### APP Screenshots
+---
 
-1. *Home page (light & dark themes)*
+### p.s
+
+- Local environment variables can be changed in the `./.env.public`<br/>
+
+## API routes &#128190;
+
+API documentation <b>(Swagger OpenAPIv3)</b> is automatically generated by the <b>swagger-autogen</b> module and available on `http://.../api/v1/docs/` when app has been started.
+
+Also available in `json` on path: `server/docs/swagger-output.json`.
+
+## Screenshots &#127745;
+
+1. Home page (light & dark themes)
 
 <div align="center">
-    <img src="./screenshots/app/ScrShot_9.png" width="75%" height="75%" alt='Home page, light theme'>
-    <img src="./screenshots/app/ScrShot_10.png" width="75%" height="75%" alt='Home page, dark theme'>
+    <img src="./screenshots/" width="75%" height="75%" alt='Home page, light theme'>
+    <img src="./screenshots/" width="75%" height="75%" alt='Home page, dark theme'>
 </div>
 
-2. *Main page: app description (light & dark themes)*
+2. Main page: app description
 
 <div align="center">
-    <img src="./screenshots/app/ScrShot_11.png" width="75%" height="75%" alt='Main page, light theme'>
-    <img src="./screenshots/app/ScrShot_12.png" width="75%" height="75%" alt='Main page, dark theme'>
+    <img src="./screenshots/" width="75%" height="75%" alt='Main page, light theme'>
 </div>
 
-3. *Main page: data block*
+3. Main page: data block
 
 <div align="center">
-    <img src="./screenshots/app/ScrShot_13.png" width="75%" height="75%" alt='Main page, light theme'>
+    <img src="./screenshots/" width="75%" height="75%" alt='Main page, light theme'>
 </div>
 
-4. *Main page: get exact repository's data*
+4. Main page: get exact repository's data
 
 <div align="center">
-    <img src="./screenshots/app/ScrShot_14.png" width="75%" height="75%" alt='Main page, light theme'>
+    <img src="./screenshots/" width="75%" height="75%" alt='Main page, light theme'>
 </div>
 
-5. *Main page: get all repositories data*
+5. Main page: get all repositories data
 
 <div align="center">
-    <img src="./screenshots/app/ScrShot_15.png" width="75%" height="75%" alt='Main page, light theme'>
+    <img src="./screenshots/" width="75%" height="75%" alt='Main page, light theme'>
 </div>
 
-6. *404 page*
+6. 404 page
 
 <div align="center">
-    <img src="./screenshots/app/ScrShot_16.png" width="75%" height="75%" alt='Main page, light theme'>
+    <img src="./screenshots/" width="75%" height="75%" alt='Main page, light theme'>
 </div>

@@ -1,0 +1,20 @@
+# # Node version
+# ARG NODE_VERSION=20.11.0
+
+# # ------------------------------------------------------BACKEND
+
+# FROM node:${NODE_VERSION} as BACKEND
+
+# LABEL maintainer="2023 MyHomeworks, { }"
+
+# WORKDIR /app
+
+# COPY ./.env .
+
+# WORKDIR /app/API
+
+# COPY ./API/package.json .
+
+# RUN npm install
+
+# COPY ./API .

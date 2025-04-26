@@ -33,15 +33,6 @@ export default defineConfig([
       ...js.configs.recommended.rules,
       ...eslintPluginJest.configs.recommended.rules,
       ...pluginVue.configs["flat/recommended"].rules,
-      "vue/attribute-hyphenation": "warn",
-      "vue/v-on-event-hyphenation": "warn",
-      "vue/multi-word-component-names": "off",
-      "vue/component-tags-order": [
-        "error",
-        {
-          order: ["template", "script", "style"],
-        },
-      ],
       "prefer-const": "error",
       "no-var": "error",
       "no-console": "error",

@@ -1,0 +1,21 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "GitHub Trending API Documentation (OpenAPIv3)",
+    "description": "This service is to check GitHub API and pull basic information about the most trending repositories using NodeJS(ExpressJS), Vue3 and MongoDB."
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3000",
+      "description": "API server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Repositories",
+      "description": "GitHub synchronization and repositories information pulling endpoints"
+    }
+  ],
+  "paths": {}
+}

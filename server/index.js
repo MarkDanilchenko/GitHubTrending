@@ -4,7 +4,7 @@ import logger from "./services/loggerConfig.js";
 import mongoose from "./models/init.js";
 
 /**
- * Starts the Express.js server.
+ * Starts the Express.js server and connects to MongoDB.
  *
  * @async
  * @returns {Promise<void>}

@@ -1,37 +1,49 @@
-// --------------------------------------APP_CONFIG
-const dotenv = require('dotenv');
-dotenv.config({ path: '../.env' });
-const { app } = require('./server.js');
-const { mongoose } = require('./models/models.js');
-const host_server = process.env.SERVER_HOST || '127.0.0.1';
-const port_server = 3000;
-const host_db = process.env.DB_HOST || 'localhost';
-const port_db = 27017;
-let autoSync = require('./controllers/autosync.js');
+import server from "./server.js";
+import { expressOptions, mongoOptions } from "./env.js";
+import logger from "./services/loggerConfig.js";
+import mongoose from "./models/init.js";
 
-// --------------------------------------START SERVER+DB
-(async () => {
-	try {
-		await mongoose.connect(`mongodb://${host_db}:${port_db}/github_trending`).then(() => {
-			console.log('Mongoose connected!');
-			app.listen(port_server, host_server, () => {
-				if (process.env.SERVER_PORT_OUTER) {
-					console.log(`Server running at http://${host_server}:${process.env.SERVER_PORT_OUTER}/`);
-				} else {
-					console.log(`Server running at http://${host_server}:${port_server}/`);
-				}
-				// auto sync start
-				autoSync.startTimer();
-			});
-		});
-	} catch (error) {
-		console.log(`Error: ${error.message}`);
-	}
-})();
+/**
+ * Starts the Express.js server.
+ *
+ * @async
+ * @returns {Promise<void>}
+ */
+async function startServer() {
+  try {
+    await mongoose.connect(`mongodb://${mongoOptions.host}:${mongoOptions.port}/`, {
+      user: mongoOptions.username,
+      pass: mongoOptions.password,
+      dbName: mongoOptions.database,
+    });
+    logger.info(`Mongoose is connected on host: ${mongoOptions.host}, port: ${mongoOptions.port}`);
 
-// --------------------------------------EXIT SERVER+DB
-process.on('SIGINT', async () => {
-	await mongoose.disconnect();
-	console.log('\nMongoose disconnected!\nServer exit');
-	process.exit(0);
+    server.listen(expressOptions.port, expressOptions.host, () => {
+      logger.info(`Server is running on http://${expressOptions.host}:${expressOptions.port}`);
+    });
+  } catch (error) {
+    logger.error("Error: " + error.message);
+  }
+}
+
+await startServer();
+
+// let autoSync = require("./controllers/autosync.js");
+
+//       app.listen(port_server, host_server, () => {
+//         if (process.env.SERVER_PORT_OUTER) {
+//           console.log(`Server running at http://${host_server}:${process.env.SERVER_PORT_OUTER}/`);
+//         } else {
+//           console.log(`Server running at http://${host_server}:${port_server}/`);
+//         }
+
+//         autoSync.startTimer();
+
+process.on("SIGINT", async () => {
+  await mongoose.disconnect();
+
+  logger.info("Mongoose disconnected!");
+  logger.info("Server stopped!");
+
+  process.exit(0);
 });

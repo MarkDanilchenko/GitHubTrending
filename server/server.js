@@ -1,26 +1,38 @@
-// --------------------------------------SERVER_CONFIG
-const express = require('express');
-const app = express();
-const cors = require('cors');
-app.use(cors());
-const { router: apiRouter } = require('./routes/router.js');
+import express from "express";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import path from "path";
+import { fileURLToPath } from "url";
+import { expressOptions } from "./env.js";
 
-// --------------------------------------COMMON_MIDDLEWARE
-app.use(express.json());
-app.use((req, res, next) => {
-	res.setHeader('Content-Type', 'application/json');
-	next();
+const server = express();
+const absolutePath = path.dirname(fileURLToPath(import.meta.url));
+
+server.use(cors({ origin: "*" }));
+server.use(cookieParser(expressOptions.cookieSecret));
+server.use(express.json());
+server.use(express.urlencoded({ extended: true }));
+
+server.use("/static", express.static(path.join(absolutePath, "/assets")));
+
+// server.use("/api/v1"); // TODO add router
+
+server.get("/test", (req, res) => {
+  /*
+		#swagger.ignore = true
+	*/
+  res.status(200);
+  res.send(JSON.stringify({ message: "test" }));
+  res.end();
 });
 
-// --------------------------------------ROUTER
-app.use('/api/v1', apiRouter);
-
-// --------------------------------------TEST_URL
-app.get('/', (req, res) => {
-	res.status(200);
-	res.json({ message: 'Server running!' });
-	res.end();
+server.all(/(.*)/, (req, res) => {
+  /*
+		#swagger.ignore = true
+	*/
+  res.status(404);
+  res.send(JSON.stringify({ message: "Resource is not Found" }));
+  res.end();
 });
 
-// --------------------------------------EXPORT
-module.exports = { app };
+export default server;

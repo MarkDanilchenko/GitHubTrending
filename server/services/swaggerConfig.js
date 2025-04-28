@@ -45,6 +45,28 @@ const docConfig = {
           },
         },
       },
+      ResponseAutoSyncDisableSchema: {
+        type: "object",
+        required: ["message"],
+        properties: {
+          message: {
+            type: "string",
+            example: "Auto sync is disabled!",
+            description: "Success message for auto sync disable",
+          },
+        },
+      },
+      ResponseAutoSyncRefreshSchema: {
+        type: "object",
+        required: ["message"],
+        properties: {
+          message: {
+            type: "string",
+            example: "Auto sync timer is refreshed!",
+            description: "Success message for auto sync refresh",
+          },
+        },
+      },
       Response400Schema: {
         type: "object",
         required: ["message"],

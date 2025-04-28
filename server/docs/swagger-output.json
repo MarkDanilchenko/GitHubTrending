@@ -20,9 +20,7 @@
   "paths": {
     "/api/v1/repos/sync/status": {
       "get": {
-        "tags": [
-          "Repositories"
-        ],
+        "tags": ["Repositories"],
         "summary": "Get auto synchronization status",
         "description": "Get auto synchronization status",
         "operationId": "autoSyncStatus",
@@ -51,10 +49,8 @@
       }
     },
     "/api/v1/repos/sync/enable": {
-      "get": {
-        "tags": [
-          "Repositories"
-        ],
+      "post": {
+        "tags": ["Repositories"],
         "summary": "Enable auto synchronization",
         "description": "Enable auto synchronization",
         "operationId": "autoSyncEnable",
@@ -65,6 +61,66 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseAutoSyncEnableSchema"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response400Schema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/repos/sync/disable": {
+      "post": {
+        "tags": ["Repositories"],
+        "summary": "Disable auto synchronization",
+        "description": "Disable auto synchronization",
+        "operationId": "autoSyncDisable",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseAutoSyncDisableSchema"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response400Schema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/repos/sync/refresh": {
+      "post": {
+        "tags": ["Repositories"],
+        "summary": "Refresh auto synchronization timer",
+        "description": "Refresh auto synchronization timer",
+        "operationId": "autoSyncRefresh",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseAutoSyncRefreshSchema"
                 }
               }
             }
@@ -117,9 +173,7 @@
     "schemas": {
       "ResponseAutoSyncEnableSchema": {
         "type": "object",
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "properties": {
           "message": {
             "type": "string",
@@ -130,9 +184,7 @@
       },
       "ResponseAutoSyncStatusSchema": {
         "type": "object",
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "properties": {
           "message": {
             "type": "string",
@@ -141,11 +193,31 @@
           }
         }
       },
+      "ResponseAutoSyncDisableSchema": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Auto sync is disabled!",
+            "description": "Success message for auto sync disable"
+          }
+        }
+      },
+      "ResponseAutoSyncRefreshSchema": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Auto sync timer is refreshed!",
+            "description": "Success message for auto sync refresh"
+          }
+        }
+      },
       "Response400Schema": {
         "type": "object",
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "properties": {
           "message": {
             "type": "string",
@@ -156,9 +228,7 @@
       },
       "Response404Schema": {
         "type": "object",
-        "required": [
-          "message"
-        ],
+        "required": ["message"],
         "properties": {
           "message": {
             "type": "string",

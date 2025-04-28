@@ -7,7 +7,9 @@ const router = express.Router();
 
 // router.route("/manual").post(validateRequest(manualSyncRepositoriesSchema), repositoriesSyncController.manualSync);
 router.route("/status").get(repositoriesSyncController.autoSyncStatus);
-router.route("/enable").get(repositoriesSyncController.autoSyncEnable);
+router.route("/enable").post(repositoriesSyncController.autoSyncEnable.bind(repositoriesSyncController));
+router.route("/disable").post(repositoriesSyncController.autoSyncDisable);
+router.route("/refresh").post(repositoriesSyncController.autoSyncRefresh);
 
 // // http://localhost:3000/api/v1/repos_sync
 // router.route("/repos_sync").post(syncController.syncTrendingRepos);

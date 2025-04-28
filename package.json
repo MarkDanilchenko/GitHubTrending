@@ -38,10 +38,6 @@
     "prettier": "^3.5.3",
     "supertest": "^7.1.0"
   },
-  "imports": {
-    "#server/*": "./*",
-    "#client/*": "./*"
-  },
   "browserslist": [
     "last 2 versions",
     "> 1%",

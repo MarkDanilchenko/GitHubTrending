@@ -7,7 +7,7 @@ const {
   EXPRESS_SERVER_PORT,
   MONGO_HOST,
   MONGO_PORT,
-  AUTO_SYNC_TIME,
+  AUTO_SYNC_REMAINING,
   MONGO_INITDB_DATABASE,
   MONGO_INITDB_ROOT_USERNAME,
   MONGO_INITDB_ROOT_PASSWORD,
@@ -17,7 +17,7 @@ const expressOptions = {
   host: EXPRESS_SERVER_HOST,
   port: EXPRESS_SERVER_PORT || 3000,
   cookieSecret: COOKIE_SECRET,
-  autoSyncTime: AUTO_SYNC_TIME || 3600,
+  autoSyncRemaining: AUTO_SYNC_REMAINING || 3600,
 };
 
 const mongoOptions = {

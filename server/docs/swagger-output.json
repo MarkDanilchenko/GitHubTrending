@@ -17,5 +17,156 @@
       "description": "GitHub synchronization and repositories information pulling endpoints"
     }
   ],
-  "paths": {}
+  "paths": {
+    "/api/v1/repos/sync/status": {
+      "get": {
+        "tags": [
+          "Repositories"
+        ],
+        "summary": "Get auto synchronization status",
+        "description": "Get auto synchronization status",
+        "operationId": "autoSyncStatus",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseAutoSyncStatusSchema"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response400Schema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/repos/sync/enable": {
+      "get": {
+        "tags": [
+          "Repositories"
+        ],
+        "summary": "Enable auto synchronization",
+        "description": "Enable auto synchronization",
+        "operationId": "autoSyncEnable",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseAutoSyncEnableSchema"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response400Schema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/repos/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/repos/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ResponseAutoSyncEnableSchema": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Auto synchronization is enabled",
+            "description": "Success message for auto sync enable"
+          }
+        }
+      },
+      "ResponseAutoSyncStatusSchema": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "enabled|disabled",
+            "description": "Success message if auto sync enabled or disabled"
+          }
+        }
+      },
+      "Response400Schema": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Bad Request",
+            "description": "Error message"
+          }
+        }
+      },
+      "Response404Schema": {
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Not found!",
+            "description": "Error message"
+          }
+        }
+      }
+    }
+  }
 }

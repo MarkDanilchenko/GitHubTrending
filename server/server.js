@@ -6,6 +6,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { expressOptions } from "./env.js";
 import swaggerUI from "swagger-ui-express";
+import RepositoriesSyncRouter from "./router/RepositoriesSync.js";
+import RepositoriesRouter from "./router/repositories.js";
 
 const server = express();
 const absolutePath = path.dirname(fileURLToPath(import.meta.url));
@@ -51,7 +53,8 @@ server.get("/test", (req, res) => {
   res.end();
 });
 
-// server.use("/api/v1"); // TODO add router
+server.use("/api/v1/repos/sync", RepositoriesSyncRouter);
+server.use("/api/v1/repos", RepositoriesRouter);
 
 server.all(/(.*)/, (req, res) => {
   /*

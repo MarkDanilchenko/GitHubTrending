@@ -22,7 +22,52 @@ const docConfig = {
     },
   ],
   components: {
-    // "@schemas": {},
+    "@schemas": {
+      ResponseAutoSyncEnableSchema: {
+        type: "object",
+        required: ["message"],
+        properties: {
+          message: {
+            type: "string",
+            example: "Auto synchronization is enabled",
+            description: "Success message for auto sync enable",
+          },
+        },
+      },
+      ResponseAutoSyncStatusSchema: {
+        type: "object",
+        required: ["message"],
+        properties: {
+          message: {
+            type: "string",
+            example: "enabled|disabled",
+            description: "Success message if auto sync enabled or disabled",
+          },
+        },
+      },
+      Response400Schema: {
+        type: "object",
+        required: ["message"],
+        properties: {
+          message: {
+            type: "string",
+            example: "Bad Request",
+            description: "Error message",
+          },
+        },
+      },
+      Response404Schema: {
+        type: "object",
+        required: ["message"],
+        properties: {
+          message: {
+            type: "string",
+            example: "Not found!",
+            description: "Error message",
+          },
+        },
+      },
+    },
     // parameters: {},
   },
 };

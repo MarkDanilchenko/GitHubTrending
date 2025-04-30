@@ -67,6 +67,94 @@ const docConfig = {
           },
         },
       },
+      ResponseGetReposListSchema: {
+        type: "object",
+        required: ["repositories", "count", "limit", "offset"],
+        properties: {
+          repositories: {
+            type: "array",
+            items: {
+              $ref: "#/components/schemas/ResponseGetExactRepoSchema",
+            },
+          },
+          count: {
+            type: "number",
+            example: 10,
+            description: "Number of repositories",
+          },
+          limit: {
+            type: "number",
+            example: 10,
+            description: "Limit of repositories",
+          },
+          offset: {
+            type: "number",
+            example: 0,
+            description: "Offset of repositories",
+          },
+        },
+      },
+      ResponseGetExactRepoSchema: {
+        type: "object",
+        required: [
+          "_id",
+          "full_name",
+          "name",
+          "git_id",
+          "owner_login",
+          "html_url",
+          "description",
+          "stargazers_count",
+          "language",
+        ],
+        properties: {
+          _id: {
+            type: "string",
+            example: "62e6e5e7b4f5e8f5e8f5e8f5",
+            description: "Repository ID",
+          },
+          full_name: {
+            type: "string",
+            example: "octocat/Hello-World",
+            description: "Repository full name",
+          },
+          name: {
+            type: "string",
+            example: "Hello-World",
+            description: "Repository name",
+          },
+          git_id: {
+            type: "number",
+            example: 1,
+            description: "Repository ID",
+          },
+          owner_login: {
+            type: "string",
+            example: "octocat",
+            description: "Repository owner login",
+          },
+          html_url: {
+            type: "string",
+            example: "https://github.com/octocat/Hello-World",
+            description: "Repository URL",
+          },
+          description: {
+            type: "string",
+            example: "This your first repo!",
+            description: "Repository description",
+          },
+          stargazers_count: {
+            type: "number",
+            example: 1,
+            description: "Repository stargazers count",
+          },
+          language: {
+            type: "string",
+            example: "JavaScript",
+            description: "Repository language",
+          },
+        },
+      },
       Response400Schema: {
         type: "object",
         required: ["message"],
@@ -90,7 +178,78 @@ const docConfig = {
         },
       },
     },
-    // parameters: {},
+    parameters: {
+      IdInPath: {
+        in: "path",
+        name: "id",
+        description: "Request repository id",
+        required: true,
+        schema: {
+          type: "string",
+          format: "string",
+          example: "681139148550c69d9796823f",
+        },
+      },
+      LimitInQuery: {
+        in: "query",
+        name: "limit",
+        description: "Limit of repositories",
+        required: false,
+        default: 10,
+        schema: {
+          type: "number",
+          format: "number",
+          example: 10,
+        },
+      },
+      OffsetInQuery: {
+        in: "query",
+        name: "offset",
+        description: "Offset of repositories",
+        required: false,
+        default: 0,
+        schema: {
+          type: "number",
+          format: "number",
+          example: 0,
+        },
+      },
+      SortInQuery: {
+        in: "query",
+        name: "sort",
+        description: "Sort repositories by field",
+        required: false,
+        default: "stargazers_count",
+        schema: {
+          type: "string",
+          format: "string",
+          example: "stargazers_count",
+        },
+      },
+      OrderInQuery: {
+        in: "query",
+        name: "order",
+        description: "Order repositories by field",
+        required: false,
+        default: "-1",
+        schema: {
+          type: "string",
+          format: "string",
+          example: "-1",
+        },
+      },
+      QueryInQuery: {
+        in: "query",
+        name: "query",
+        description: "Query repositories by field",
+        required: false,
+        schema: {
+          type: "string",
+          format: "string",
+          example: "smth",
+        },
+      },
+    },
   },
 };
 

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { badRequestError } from "../utils/errors.js";
+import { badRequestError } from "#server/utils/errors.js";
 
 /**
  * Returns a middleware that validates the request data with the given Zod schema.
@@ -22,7 +22,8 @@ export default function validateRequest(schema) {
       });
 
       req.body = validatedData.body;
-      req.query = validatedData.query;
+      // In expressJS 5.x.x it is forbidden to rewrite req.query directly;
+      req._query = validatedData.query;
       req.params = validatedData.params;
       req.files = validatedData.files;
 

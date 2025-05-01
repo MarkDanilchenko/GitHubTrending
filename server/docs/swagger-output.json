@@ -180,20 +180,82 @@
     },
     "/api/v1/repos/": {
       "get": {
-        "description": "",
+        "tags": ["Repositories"],
+        "summary": "Get repositories",
+        "description": "Get repositories",
+        "operationId": "getRepos",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/LimitInQuery"
+          },
+          {
+            "$ref": "#/components/parameters/OffsetInQuery"
+          },
+          {
+            "$ref": "#/components/parameters/SortInQuery"
+          },
+          {
+            "$ref": "#/components/parameters/OrderInQuery"
+          },
+          {
+            "$ref": "#/components/parameters/QueryInQuery"
+          }
+        ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseGetReposListSchema"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response400Schema"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/v1/repos/{id}": {
       "get": {
-        "description": "",
+        "tags": ["Repositories"],
+        "summary": "Get exact repository",
+        "description": "Get exact repository",
+        "operationId": "getExactRepo",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/IdInPath"
+          }
+        ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseGetExactRepoSchema"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response400Schema"
+                }
+              }
+            }
           }
         }
       }

@@ -6,7 +6,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { expressOptions } from "./env.js";
 import swaggerUI from "swagger-ui-express";
-import RepositoriesSyncRouter from "./router/RepositoriesSync.js";
+import RepositoriesSyncRouter from "./router/repositoriesSync.js";
 import RepositoriesRouter from "./router/repositories.js";
 
 const server = express();

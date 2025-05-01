@@ -1,5 +1,5 @@
 import { badRequestError, notFoundError } from "#server/utils/errors.js";
-import { TrendingRepository } from "../models/init.js";
+import { TrendingRepository } from "#server/models/init.js";
 
 class RepositoriesController {
   async getRepos(req, res) {
@@ -14,7 +14,7 @@ class RepositoriesController {
       '#/components/parameters/SortInQuery',
       '#/components/parameters/OrderInQuery',
       '#/components/parameters/QueryInQuery'
-      ]
+    ],
     #swagger.responses[200] = {
       description: 'OK',
       content: {
@@ -35,7 +35,7 @@ class RepositoriesController {
         }
       }
     }
-     */
+    */
     try {
       const { limit, offset, sort, order, query } = req._query;
 
@@ -93,7 +93,7 @@ class RepositoriesController {
         }
       }
     }
-     */
+    */
     try {
       const { id } = req.params;
 

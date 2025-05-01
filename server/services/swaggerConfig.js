@@ -23,6 +23,22 @@ const docConfig = {
   ],
   components: {
     "@schemas": {
+      RequestManualSyncSchema: {
+        type: "object",
+        required: ["lang", "stars"],
+        properties: {
+          lang: {
+            type: "string",
+            example: "javascript",
+            description: "Programming language",
+          },
+          stars: {
+            type: "number",
+            example: 100,
+            description: "GitHub repository stars amount",
+          },
+        },
+      },
       ResponseAutoSyncEnableSchema: {
         type: "object",
         required: ["message"],
@@ -152,6 +168,17 @@ const docConfig = {
             type: "string",
             example: "JavaScript",
             description: "Repository language",
+          },
+        },
+      },
+      ResponseManualSyncSchema: {
+        type: "object",
+        required: ["message"],
+        properties: {
+          message: {
+            type: "string",
+            example: "Sync completed successfully!",
+            description: "Success message for manual sync",
           },
         },
       },

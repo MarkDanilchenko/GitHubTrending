@@ -22,8 +22,8 @@ async function startServer() {
     server.listen(expressOptions.port, expressOptions.host, () => {
       logger.info(`Server is running on http://${expressOptions.host}:${expressOptions.port}`);
 
-      logger.info(`Auto synchronization is enabled. Remaining in ${expressOptions.autoSyncRemaining}s`);
-      repositoriesSyncController.autoSync();
+      // logger.info(`Auto synchronization is enabled. Remaining in ${expressOptions.autoSyncRemaining}s`);
+      // repositoriesSyncController.autoSync();
     });
   } catch (error) {
     logger.error("Error: " + error.message);

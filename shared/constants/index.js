@@ -1,3 +1,5 @@
-export const defaultSyncReposLangs = ["python", "ruby", "javascript"];
+export const syncReposLangs = ["python", "ruby", "javascript"];
 
-export const defaultSyncReposStars = 10_000;
+export const syncReposStars = 10_000;
+
+export const syncReposChunkSize = 100;

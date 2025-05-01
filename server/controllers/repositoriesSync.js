@@ -2,20 +2,18 @@ import { Octokit } from "octokit";
 import { expressOptions } from "#server/env.js";
 import { badRequestError } from "#server/utils/errors.js";
 import logger from "#server/services/loggerConfig.js";
-import { defaultSyncReposLangs, defaultSyncReposStars } from "#shared/constants/index.js";
+import { syncReposChunkSize, syncReposLangs, syncReposStars } from "#shared/constants/index.js";
 import { TrendingRepository } from "#server/models/init.js";
 
 class RepositoriesSyncController {
   static autoSyncTimer = null;
-  static defaultSyncReposLangs = defaultSyncReposLangs;
-  static defaultSyncReposStars = defaultSyncReposStars;
 
   constructor(octokit) {
     this.octokit = octokit;
   }
 
   /**
-   * Sync trending repositories to the database every 1 hour by default.
+   * Sync trending repositories every 1 hour by default.
    *
    * This method will be called automatically when the server starts and every remaining time
    * after the previous call.
@@ -27,12 +25,13 @@ class RepositoriesSyncController {
   async autoSync() {
     try {
       logger.info("Auto sync started!");
-      for (const lang of RepositoriesSyncController.defaultSyncReposLangs) {
+
+      for (const lang of syncReposLangs) {
         const response = await this.octokit.request("GET /search/repositories", {
-          q: `stars:>=${RepositoriesSyncController.defaultSyncReposStars} language:${lang}`,
+          q: `stars:>=${syncReposStars} language:${lang}`,
           sort: "stars",
           order: "desc",
-          per_page: 100,
+          per_page: syncReposChunkSize,
           headers: {
             "X-GitHub-Api-Version": "2022-11-28",
             Accept: "application/vnd.github.v3+json",
@@ -40,7 +39,7 @@ class RepositoriesSyncController {
         });
 
         if (response.status !== 200) {
-          throw new Error("auto sync failed!");
+          throw new Error("Auto sync failed!");
         }
 
         await TrendingRepository.deleteMany({ language: { $regex: new RegExp(`^${lang}$`, "i") } });
@@ -58,6 +57,7 @@ class RepositoriesSyncController {
           });
         }
       }
+
       logger.info("Auto sync finished!");
 
       RepositoriesSyncController.autoSyncTimer = setTimeout(async () => {
@@ -249,8 +249,91 @@ class RepositoriesSyncController {
   }
 
   async manualSync(req, res) {
+    /*
+    #swagger.tags = ['Repositories']
+    #swagger.summary = 'Manual synchronization'
+    #swagger.description = 'Manual synchronization'
+    #swagger.operationId = 'manualSync'
+    #swagger.requestBody = {
+      required: true,
+      content: {
+        'application/json': {
+          schema: {
+            $ref: '#/components/schemas/RequestManualSyncSchema'
+          }
+        }
+      }
+    },
+    #swagger.responses[200] = {
+      description: 'OK',
+      content: {
+        'application/json': {
+          schema: {
+            $ref: '#/components/schemas/ResponseManualSyncSchema'
+          }
+        }
+      }
+    },
+    #swagger.responses[400] = {
+      description: 'Bad request',
+      content: {
+        'application/json': {
+          schema: {
+            $ref: '#/components/schemas/Response400Schema'
+          }
+        }
+      }
+    }
+     */
     try {
-    } catch (error) {}
+      logger.info("Manual sync started!");
+
+      const { lang, stars } = req.body;
+      const timer = RepositoriesSyncController.autoSyncTimer;
+
+      if (timer && timer._idleTimeout > 0) {
+        timer.refresh();
+        logger.info("Auto sync timer is refreshed!");
+      }
+
+      const response = await this.octokit.request("GET /search/repositories", {
+        q: `stars:>=${stars} language:${lang}`,
+        sort: "stars",
+        order: "desc",
+        per_page: syncReposChunkSize,
+        headers: {
+          "X-GitHub-Api-Version": "2022-11-28",
+          Accept: "application/vnd.github.v3+json",
+        },
+      });
+
+      if (response.status !== 200) {
+        throw new Error("Manual sync failed!");
+      }
+
+      await TrendingRepository.deleteMany({ language: { $regex: new RegExp(`^${lang}$`, "i") } });
+
+      for (const repo of response.data.items) {
+        await TrendingRepository.create({
+          full_name: repo.full_name,
+          name: repo.name,
+          git_id: repo.id,
+          owner_login: repo.owner.login,
+          html_url: repo.html_url,
+          description: repo.description ?? "",
+          stargazers_count: repo.stargazers_count,
+          language: repo.language,
+        });
+      }
+
+      logger.info("Manual sync finished!");
+
+      res.status(200);
+      res.send(JSON.stringify({ message: "Sync completed successfully!" }));
+      res.end();
+    } catch (error) {
+      badRequestError(res, error.message);
+    }
   }
 }
 

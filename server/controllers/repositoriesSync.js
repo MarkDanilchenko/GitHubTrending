@@ -5,7 +5,7 @@ import logger from "#server/services/loggerConfig.js";
 import { syncReposChunkSize, syncReposLangs, syncReposStars } from "#shared/constants/index.js";
 import { TrendingRepository } from "#server/models/init.js";
 
-class RepositoriesSyncController {
+export class RepositoriesSyncController {
   static autoSyncTimer = null;
 
   constructor(octokit) {
@@ -60,8 +60,8 @@ class RepositoriesSyncController {
 
       logger.info("Auto sync finished!");
 
-      RepositoriesSyncController.autoSyncTimer = setTimeout(async () => {
-        await this.autoSync();
+      RepositoriesSyncController.autoSyncTimer = setTimeout(() => {
+        this.autoSync();
       }, expressOptions.autoSyncRemaining * 1000);
     } catch (error) {
       logger.error(`Error: ${error.message}`);

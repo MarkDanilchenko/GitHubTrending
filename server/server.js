@@ -36,13 +36,8 @@ server.get("/api/v1/docs/swagger-output.json", (req, res) => {
 });
 server.use("/api/v1/docs", swaggerUI.serveFiles(null, swaggerUIOptions), swaggerUI.setup(null, swaggerUIOptions));
 
-server.all("/", (req, res) => {
-  /*
-		#swagger.ignore = true
-	*/
-  res.status(302);
-  res.redirect("/api/v1");
-});
+server.use("/api/v1/repos/sync", RepositoriesSyncRouter);
+server.use("/api/v1/repos", RepositoriesRouter);
 
 server.get("/test", (req, res) => {
   /*
@@ -53,15 +48,12 @@ server.get("/test", (req, res) => {
   res.end();
 });
 
-server.use("/api/v1/repos/sync", RepositoriesSyncRouter);
-server.use("/api/v1/repos", RepositoriesRouter);
-
 server.all(/(.*)/, (req, res) => {
   /*
 		#swagger.ignore = true
 	*/
   res.status(404);
-  res.send(JSON.stringify({ message: "Resource is not Found" }));
+  res.send(JSON.stringify({ message: "Resource is not found" }));
   res.end();
 });
 

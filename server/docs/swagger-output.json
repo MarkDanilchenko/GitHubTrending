@@ -58,36 +58,6 @@
         }
       }
     },
-    "/api/v1/repos/sync/status": {
-      "get": {
-        "tags": ["Repositories"],
-        "summary": "Get auto synchronization status",
-        "description": "Get auto synchronization status",
-        "operationId": "autoSyncStatus",
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseAutoSyncStatusSchema"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response400Schema"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/v1/repos/sync/enable": {
       "post": {
         "tags": ["Repositories"],
@@ -118,6 +88,26 @@
         }
       }
     },
+    "/api/v1/repos/sync/status": {
+      "get": {
+        "tags": ["Repositories"],
+        "summary": "Get auto synchronization status",
+        "description": "Get auto synchronization status",
+        "operationId": "autoSyncStatus",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseAutoSyncStatusSchema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/repos/sync/disable": {
       "post": {
         "tags": ["Repositories"],
@@ -131,16 +121,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseAutoSyncDisableSchema"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response400Schema"
                 }
               }
             }
@@ -161,16 +141,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseAutoSyncRefreshSchema"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response400Schema"
                 }
               }
             }

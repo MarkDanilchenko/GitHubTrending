@@ -11,8 +11,8 @@ router
     validateRequest(manualSyncRepositoriesSchema),
     repositoriesSyncController.manualSync.bind(repositoriesSyncController),
   );
-router.route("/status").get(repositoriesSyncController.autoSyncStatus);
 router.route("/enable").post(repositoriesSyncController.autoSyncEnable.bind(repositoriesSyncController));
+router.route("/status").get(repositoriesSyncController.autoSyncStatus);
 router.route("/disable").post(repositoriesSyncController.autoSyncDisable);
 router.route("/refresh").post(repositoriesSyncController.autoSyncRefresh);
 

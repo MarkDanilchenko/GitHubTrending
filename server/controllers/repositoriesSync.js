@@ -65,6 +65,8 @@ export class RepositoriesSyncController {
       }, expressOptions.autoSyncRemaining * 1000);
     } catch (error) {
       logger.error(`Error: ${error.message}`);
+
+      throw error;
     }
   }
 
@@ -102,7 +104,7 @@ export class RepositoriesSyncController {
       if (timer && timer._idleTimeout > 0) {
         message = "Auto sync is already enabled!";
       } else {
-        this.autoSync();
+        await this.autoSync();
 
         message = "Auto sync is enabled!";
       }
@@ -130,34 +132,20 @@ export class RepositoriesSyncController {
           }
         }
       }
-    },
-    #swagger.responses[400] = {
-      description: 'Bad request',
-      content: {
-        'application/json': {
-          schema: {
-            $ref: '#/components/schemas/Response400Schema'
-          }
-        }
-      }
     }
     */
-    try {
-      const timer = RepositoriesSyncController.autoSyncTimer;
-      let status;
+    const timer = RepositoriesSyncController.autoSyncTimer;
+    let status;
 
-      if (timer && timer._idleTimeout > 0) {
-        status = "enabled";
-      } else {
-        status = "disabled";
-      }
-
-      res.status(200);
-      res.json({ status });
-      res.end();
-    } catch (error) {
-      badRequestError(res, error.message);
+    if (timer && timer._idleTimeout > 0) {
+      status = "enabled";
+    } else {
+      status = "disabled";
     }
+
+    res.status(200);
+    res.json({ status });
+    res.end();
   }
 
   async autoSyncRefresh(req, res) {
@@ -175,36 +163,22 @@ export class RepositoriesSyncController {
           }
         }
       }
-    },
-    #swagger.responses[400] = {
-      description: 'Bad request',
-      content: {
-        'application/json': {
-          schema: {
-            $ref: '#/components/schemas/Response400Schema'
-          }
-        }
-      }
     }
     */
-    try {
-      const timer = RepositoriesSyncController.autoSyncTimer;
-      let message = "";
+    const timer = RepositoriesSyncController.autoSyncTimer;
+    let message = "";
 
-      if (timer && timer._idleTimeout > 0) {
-        timer.refresh();
+    if (timer && timer._idleTimeout > 0) {
+      timer.refresh();
 
-        message = "Auto sync timer is refreshed!";
-      } else {
-        message = "Auto sync is disabled!";
-      }
-
-      res.status(200);
-      res.json({ message });
-      res.end();
-    } catch (error) {
-      badRequestError(res, error.message);
+      message = "Auto sync timer is refreshed!";
+    } else {
+      message = "Auto sync is disabled!";
     }
+
+    res.status(200);
+    res.json({ message });
+    res.end();
   }
 
   async autoSyncDisable(req, res) {
@@ -222,30 +196,16 @@ export class RepositoriesSyncController {
           }
         }
       }
-    },
-    #swagger.responses[400] = {
-      description: 'Bad request',
-      content: {
-        'application/json': {
-          schema: {
-            $ref: '#/components/schemas/Response400Schema'
-          }
-        }
-      }
     }
     */
-    try {
-      const timer = RepositoriesSyncController.autoSyncTimer;
-      if (timer && timer._idleTimeout > 0) {
-        clearTimeout(timer);
-      }
-
-      res.status(200);
-      res.json({ message: "Auto sync is disabled!" });
-      res.end();
-    } catch (error) {
-      badRequestError(res, error.message);
+    const timer = RepositoriesSyncController.autoSyncTimer;
+    if (timer && timer._idleTimeout > 0) {
+      clearTimeout(timer);
     }
+
+    res.status(200);
+    res.json({ message: "Auto sync is disabled!" });
+    res.end();
   }
 
   async manualSync(req, res) {

@@ -2,13 +2,13 @@
   <section class="my-navbar">
     <nav class="navbar navbar-expand-md sticky-top bg-body">
       <div class="container-fluid mt-3">
-        <router-link to="/" class="navbar-brand me-3 p-0" :class="{ 'nav-link-active-logo': $route.path === '/' }">
+        <router-link to="/" class="navbar-brand me-3 p-0">
           <img
-            src="#/assets/img/GitHub_logo.png"
+            src="/img/Brackets_logo.png"
             width="30"
             height="30"
             class="d-inline-block align-text-top"
-            alt="GitHub logo"
+            alt="App logo"
             title="Home page"
           />
         </router-link>
@@ -35,7 +35,7 @@
           <hr class="d-md-none" />
           <!-- colorMode_switcher -->
           <div class="mt-3 mt-md-0 d-flex flex-column align-items-center justify-content-center">
-            <input type="checkbox" name="colorMode_switcher" id="colorMode_switcher" @click="changeColorMode" />
+            <input id="colorMode_switcher" type="checkbox" name="colorMode_switcher" @click="changeColorMode" />
             <label for="colorMode_switcher">
               <svg
                 version="1.1"
@@ -172,6 +172,7 @@
 <script>
 import colorModeSwitcherInit from "#/mixins/colorModeSwitcherInit.js";
 import Clock from "./Clock.vue";
+
 export default {
   name: "Navbar",
   components: {
@@ -180,17 +181,17 @@ export default {
   mixins: [colorModeSwitcherInit],
   methods: {
     changeColorMode() {
-      const colorMode = $("html").attr("data-bs-theme");
+      const colorMode = document.getElementsByTagName("html")[0].getAttribute("data-bs-theme");
 
       switch (colorMode) {
         case "light":
-          $("html").attr("data-bs-theme", "dark");
+          document.getElementsByTagName("html")[0].setAttribute("data-bs-theme", "dark");
           localStorage.setItem("colorMode", "dark");
 
           break;
 
         case "dark":
-          $("html").attr("data-bs-theme", "light");
+          document.getElementsByTagName("html")[0].setAttribute("data-bs-theme", "light");
           localStorage.setItem("colorMode", "light");
 
           break;

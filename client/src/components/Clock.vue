@@ -12,17 +12,17 @@ export default {
       clock: null,
     };
   },
-  methods: {
-    timer() {
-      this.clock = new Date().toLocaleTimeString();
-      setTimeout(this.timer, 1000);
-    },
-  },
   mounted() {
     this.timer();
   },
   beforeUnmount() {
     clearTimeout(this.timer);
+  },
+  methods: {
+    timer() {
+      this.clock = new Date().toLocaleTimeString();
+      setTimeout(this.timer, 1000);
+    },
   },
 };
 </script>

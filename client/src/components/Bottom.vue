@@ -7,7 +7,7 @@
             <router-link to="/" class="nav-link px-2" title="Home page" alt="Home page"><b>Home</b></router-link>
           </li>
           <li class="nav-item">
-            <router-link to="#" class="nav-link px-2" title="Scroll to top" @click="scrollToTop" alt="Scroll to top"
+            <router-link to="#" class="nav-link px-2" title="Scroll to top" alt="Scroll to top" @click="scrollToTop"
               >&#9650; <b>Up</b></router-link
             >
           </li>

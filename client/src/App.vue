@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import colorModeInit from "./mixins/colorModeInit.js";
-import Bottom from "./components/Bottom.vue";
-import Navbar from "./components/Navbar.vue";
+import colorModeInit from "#/mixins/colorModeInit.js";
+import Bottom from "#/components/Bottom.vue";
+import Navbar from "#/components/Navbar.vue";
 
 export default {
   name: "App",

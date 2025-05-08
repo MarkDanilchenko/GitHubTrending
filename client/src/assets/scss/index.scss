@@ -1,4 +1,51 @@
+/* ------- styles variables and fonts -------- */
 @import "./colors.scss";
 @import "./fonts.scss";
 
+/* ------- customize Bootstrap -------- */
+$accordion-border-color: $green_color_05;
+$accordion-button-active-bg: $green_color_05;
+$accordion-button-active-color: $white_color;
+$accordion-button-focus-box-shadow: 0 0 0 0.25rem $green_color_05;
+$accordion-icon-transform: rotate(90deg);
+$accordion-icon-color: $green_color;
+$accordion-icon-active-color: $white_color;
+[data-bs-theme="dark"] .accordion-button::after {
+  --bs-accordion-btn-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$accordion-icon-color}'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
+  --bs-accordion-btn-active-icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{$accordion-icon-active-color}'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
+}
+
+$form-check-input-focus-border: $green_color_05;
+$form-check-input-focus-box-shadow: 0 0 0 0.15rem $green_color_05;
+$form-check-input-checked-bg-color: $green_color;
+$form-check-input-checked-border-color: $green_color;
+
+$input-border-color: $green_color_05;
+$input-focus-box-shadow: 0 0 0 0.15rem $green_color_05;
+$input-focus-border-color: $green_color;
+
+$pagination-color: $green_color_05;
+$pagination-focus-box-shadow: 0 0 0 0.15rem $green_color_05;
+$pagination-focus-color: $green_color;
+$pagination-hover-color: $green_color;
+$pagination-active-bg: $green_color_05;
+$pagination-active-border-color: $green_color_05;
+
+$form-select-focus-box-shadow: 0 0 0 0.15rem $green_color_05;
+
+/* ------- styles imports -------- */
+@import "../../../../node_modules/bootstrap/scss/bootstrap.scss";
 @import "./common.scss";
+@import "./bottom.scss";
+@import "./clock.scss";
+@import "./colorModeSwitcher.scss";
+@import "./notFound.scss";
+
+/* ------- custom styles via bootstrap mixins -------- */
+.btn-green-custom {
+  @include button-variant($green_color, $green_color_05, $white_color);
+}
+
+.btn-outline-green-custom {
+  @include button-outline-variant($green_color, $white_color);
+}

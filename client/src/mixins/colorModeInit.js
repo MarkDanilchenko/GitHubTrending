@@ -4,9 +4,9 @@ export default {
 
     if (!colorMode) {
       localStorage.setItem("colorMode", "light");
-      $("html").attr("data-bs-theme", "light");
+      document.getElementsByTagName("html")[0].setAttribute("data-bs-theme", "light");
     } else {
-      $("html").attr("data-bs-theme", colorMode);
+      document.getElementsByTagName("html")[0].setAttribute("data-bs-theme", colorMode);
     }
   },
 };

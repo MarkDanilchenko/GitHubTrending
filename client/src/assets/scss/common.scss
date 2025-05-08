@@ -2,15 +2,6 @@
   min-height: 100vh;
 }
 
-.my-bottom {
-  position: sticky;
-  top: 100vh;
-}
-
-.nav-link-active-logo {
-  background: radial-gradient(50% 50%, transparent 10%, $grey_color 70%, transparent 100%);
-}
-
 .nav-link {
   color: $grey_color !important;
 }

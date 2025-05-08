@@ -1,38 +1,43 @@
-import js from "@eslint/js";
+import pluginJs from "@eslint/js";
 import globals from "globals";
 import pluginVue from "eslint-plugin-vue";
-import eslintPluginPrettier from "eslint-plugin-prettier";
+import eslintPluginPrettier from "eslint-plugin-prettier/recommended";
 import eslintPluginJest from "eslint-plugin-jest";
-import { defineConfig } from "eslint/config";
+import vueParser from "vue-eslint-parser";
 
-export default defineConfig([
+export default [
+  pluginJs.configs.recommended,
+  ...pluginVue.configs["flat/recommended"],
+  eslintPluginPrettier,
+  eslintPluginJest.configs["flat/recommended"],
   {
     files: ["**/*.{js,mjs,cjs,vue}", "**/*.test.{js,mjs,cjs}"],
-    ignores: ["**/node_modules/**", "**/dist/**", "**/lib/**", "**/build/**", "**/coverage/**", "**/public/**"],
     languageOptions: {
-      globals: {
-        ...globals.browser,
-        ...globals.node,
-        ...globals.jquery,
-        ...globals.es2021,
-        ...eslintPluginJest.environments.globals.globals,
-      },
+      parser: vueParser,
       parserOptions: {
         ecmaVersion: "latest",
         sourceType: "module",
       },
     },
-    plugins: {
-      js,
-      vue: pluginVue.configs["flat/recommended"],
-      jest: eslintPluginJest,
-      prettier: eslintPluginPrettier,
+  },
+  {
+    ignores: ["**/node_modules/**", "**/dist/**", "**/lib/**", "**/build/**", "**/coverage/**", "**/public/**"],
+  },
+  {
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+        ...globals.es2021,
+        ...eslintPluginJest.environments.globals.globals,
+      },
     },
+  },
+  {
     rules: {
       "prettier/prettier": ["error", { doubleQuote: true, printWidth: 120 }],
-      ...js.configs.recommended.rules,
+      ...pluginJs.configs.recommended.rules,
       ...eslintPluginJest.configs.recommended.rules,
-      ...pluginVue.configs["flat/recommended"].rules,
       "prefer-const": "error",
       "no-var": "error",
       "no-console": "error",
@@ -49,6 +54,21 @@ export default defineConfig([
           next: "return",
         },
       ],
+      "vue/multi-word-component-names": "off",
+      "vue/require-default-prop": "warn",
+      "vue/prop-name-casing": ["error", "camelCase"],
+      "vue/attribute-hyphenation": ["error", "always"],
+      "vue/v-on-event-hyphenation": ["error", "always"],
+      "vue/html-self-closing": [
+        "error",
+        {
+          html: {
+            void: "always",
+            normal: "always",
+            component: "always",
+          },
+        },
+      ],
     },
   },
-]);
+];

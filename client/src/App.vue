@@ -11,14 +11,33 @@
 </template>
 
 <script>
-import colorModeInit from "#/mixins/colorModeInit.js";
+import { mapMutations } from "vuex";
 import Bottom from "#/components/Bottom.vue";
 import Navbar from "#/components/Navbar.vue";
 
 export default {
   name: "App",
   components: { Navbar, Bottom },
-  mixins: [colorModeInit],
+  data() {
+    return {
+      colorMode: localStorage.getItem("colorMode"),
+    };
+  },
+  beforeMount() {
+    if (!this.colorMode) {
+      localStorage.setItem("colorMode", "light");
+      document.getElementsByTagName("html")[0].setAttribute("data-bs-theme", "light");
+      this.setColorMode("light");
+    } else {
+      document.getElementsByTagName("html")[0].setAttribute("data-bs-theme", this.colorMode);
+      this.setColorMode(this.colorMode);
+    }
+  },
+  methods: {
+    ...mapMutations({
+      setColorMode: "setColorMode",
+    }),
+  },
 };
 </script>
 

@@ -21,7 +21,7 @@
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span class="navbar-toggler-icon" />
         </button>
         <div id="navbarContent" class="collapse navbar-collapse">
           <ul class="navbar-nav me-auto">
@@ -170,7 +170,7 @@
 </template>
 
 <script>
-import colorModeSwitcherInit from "#/mixins/colorModeSwitcherInit.js";
+import { mapMutations, mapState } from "vuex";
 import Clock from "./Clock.vue";
 
 export default {
@@ -178,21 +178,35 @@ export default {
   components: {
     Clock,
   },
-  mixins: [colorModeSwitcherInit],
+  computed: {
+    ...mapState({
+      colorMode: (state) => state.colorMode,
+    }),
+  },
+  mounted() {
+    if (this.colorMode === "light") {
+      document.getElementById("colorMode_switcher").removeAttribute("checked");
+    } else if (this.colorMode === "dark") {
+      document.getElementById("colorMode_switcher").checked = true;
+    }
+  },
   methods: {
+    ...mapMutations({
+      setColorMode: "setColorMode",
+    }),
     changeColorMode() {
-      const colorMode = document.getElementsByTagName("html")[0].getAttribute("data-bs-theme");
-
-      switch (colorMode) {
+      switch (this.colorMode) {
         case "light":
           document.getElementsByTagName("html")[0].setAttribute("data-bs-theme", "dark");
           localStorage.setItem("colorMode", "dark");
+          this.setColorMode("dark");
 
           break;
 
         case "dark":
           document.getElementsByTagName("html")[0].setAttribute("data-bs-theme", "light");
           localStorage.setItem("colorMode", "light");
+          this.setColorMode("light");
 
           break;
 

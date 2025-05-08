@@ -2,38 +2,6 @@ import gsap from "gsap";
 
 export default {
   mounted() {
-    if (this.colorMode === "dark") {
-      document.querySelectorAll("#planet *").forEach((element) => {
-        element.setAttribute("stroke", "#ffffff");
-      });
-      document
-        .querySelectorAll("#stars > #starsBig line, #stars > #starsSmall line, #stars > #circlesBig circle")
-        .forEach((element) => {
-          element.setAttribute("stroke", "#ffffff");
-        });
-      document.querySelectorAll("#stars > #circlesSmall circle").forEach((element) => {
-        element.setAttribute("fill", "#ffffff");
-      });
-      document.querySelectorAll("#spaceman #cord, #spaceman #antenna").forEach((element) => {
-        element.setAttribute("stroke", "#ffffff");
-      });
-    } else {
-      document.querySelectorAll("#planet *").forEach((element) => {
-        element.setAttribute("stroke", "#0E0620");
-      });
-      document
-        .querySelectorAll("#stars > #starsBig line, #stars > #starsSmall line, #stars > #circlesBig circle")
-        .forEach((element) => {
-          element.setAttribute("stroke", "#0E0620");
-        });
-      document.querySelectorAll("#stars > #circlesSmall circle").forEach((element) => {
-        element.setAttribute("fill", "#0E0620");
-      });
-      document.querySelectorAll("#spaceman #cord, #spaceman #antenna").forEach((element) => {
-        element.setAttribute("stroke", "#0E0620");
-      });
-    }
-
     // yoyo - forward and backward;
     // repeat - infinity;
     gsap.to("#headStripe", {
@@ -129,23 +97,5 @@ export default {
       repeat: -1,
       repeatDelay: 5,
     });
-  },
-  computed: {},
-  watch: {
-    colorMode: {
-      handler(val) {
-        switch (val) {
-          case "light":
-            break;
-
-          case "dark":
-            break;
-
-          default:
-            break;
-        }
-      },
-      deep: true,
-    },
   },
 };

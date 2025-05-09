@@ -55,13 +55,12 @@
       <div class="col-md-4 offset-md-0 col-10 offset-1 d-flex flex-column align-items-center justify-content-start">
         <div class="sideControlBox shadow-sm p-3 mb-3">
           <div class="text-center mb-3 me-md-0 me-3">
-            <span v-if="autoSyncStatus" class="text-center text-small"
-              >&#128994; Auto synchronization is <br /><b class="text-green">{{}}</b></span
-            >
-            <span v-else-if="!autoSyncStatus" class="text-center text-small"
-              >&#128308; Auto synchronization is <br /><b class="text-danger">{{}}</b></span
-            >
-            <span v-else class="text-center text-small">Auto synchronization status...</span>
+            <span class="text-center text-small">
+              {{ autoSyncStatus ? "&#128994;" : "&#128308;" }} Auto synchronization is
+              <b :class="{ 'text-green': autoSyncStatus, 'text-danger': !autoSyncStatus }">
+                {{ autoSyncStatus ? "enabled" : "disabled" }}</b
+              >
+            </span>
           </div>
           <div class="d-flex justify-content-center align-items-center">
             <button class="btn btn-outline-green-custom btn-sm me-1" @click="startAutoSync">Enable</button>
@@ -80,6 +79,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 import animationScrollDownArrows from "#/mixins/animationScrollDownArrows.js";
 import animationDescriptionCardLogos from "#/mixins/animationDescriptionCardLogos.js";
 
@@ -91,9 +91,15 @@ export default {
       autoSyncRemainingTime: import.meta.env.VITE_AUTO_SYNC_REMAINING,
     };
   },
+  computed: {
+    ...mapState({
+      autoSyncStatus: (state) => state.synchronization.autoSyncStatus,
+    }),
+  },
   mounted() {
     const scroll = document.getElementById("scroll");
 
+    this.getAutoSyncStatus();
     document.addEventListener("scroll", () => {
       if (scroll && !scroll.hidden && window.scrollY > 200) {
         scroll.hidden = true;
@@ -116,6 +122,9 @@ export default {
     });
   },
   methods: {
+    ...mapActions({
+      getAutoSyncStatus: "synchronization/getAutoSyncStatus",
+    }),
     scrollDown() {
       document.getElementById("content").scrollIntoView({
         behavior: "smooth",

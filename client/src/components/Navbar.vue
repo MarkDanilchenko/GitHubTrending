@@ -9,7 +9,7 @@
             height="30"
             class="d-inline-block align-text-top"
             alt="App logo"
-            title="Home page"
+            title="Preview page"
           />
         </router-link>
         <button

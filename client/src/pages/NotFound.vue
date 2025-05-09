@@ -603,9 +603,9 @@
         <h2>UH OH! You're lost.</h2>
         <p>
           The page you are looking for does not exist. How you got here is a mystery. But you can click the button below
-          to go back to the homepage.
+          to go back to the previewpage.
         </p>
-        <button class="btn btn-outline-green-custom" @click="backToHome">Home</button>
+        <button class="btn btn-outline-green-custom" @click="backToPreview">Preview</button>
       </div>
     </div>
   </section>
@@ -635,7 +635,7 @@ export default {
     this.colorizeSvg(this.colorMode);
   },
   methods: {
-    backToHome() {
+    backToPreview() {
       this.$router.push("/");
     },
     colorizeSvg(value) {

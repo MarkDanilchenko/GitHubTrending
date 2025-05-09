@@ -3,6 +3,11 @@ import * as VueRouter from "vue-router";
 const routes = [
   {
     path: "/",
+    name: "Preview",
+    component: () => import("#/pages/Preview.vue"),
+  },
+  {
+    path: "/home",
     name: "Home",
     component: () => import("#/pages/Home.vue"),
   },

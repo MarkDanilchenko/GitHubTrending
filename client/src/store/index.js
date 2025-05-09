@@ -1,4 +1,5 @@
 import { createStore } from "vuex";
+import synchronization from "./synchronization.js";
 
 export default createStore({
   state: () => ({
@@ -11,5 +12,7 @@ export default createStore({
     },
   },
   actions: {},
-  modules: {},
+  modules: {
+    synchronization,
+  },
 });

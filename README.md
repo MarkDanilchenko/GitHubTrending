@@ -10,7 +10,7 @@ This service is to check GitHub API and pull basic information about the most tr
 
 2. What kind of repositories are used to be pulled?
 
-    >Repositories based on **JavaScript, Typescript Ruby or Python**
+    >Repositories based on **JavaScript, Ruby or Python**
 
 3. Does the auto synchronization implemented in the service?
 

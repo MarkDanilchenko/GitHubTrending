@@ -11,7 +11,7 @@
 }
 
 #description {
-  min-height: 95vh;
+  // min-height: 95vh;
 }
 
 #description > div > div:first-child {
@@ -80,4 +80,19 @@
   button {
     min-width: 90px;
   }
+}
+
+#queryRepositories {
+  max-width: 60%;
+}
+
+.my-repositoriesTemplate {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.my-repositoriesTemplate p {
+  @include fontCustom;
 }

@@ -3,8 +3,8 @@ dotenv.config({ path: "./.env.development" });
 
 const {
   COOKIE_SECRET,
-  EXPRESS_SERVER_HOST,
-  EXPRESS_SERVER_PORT,
+  VITE_EXPRESS_SERVER_HOST,
+  VITE_EXPRESS_SERVER_PORT,
   MONGO_HOST,
   MONGO_PORT,
   AUTO_SYNC_REMAINING,
@@ -14,8 +14,8 @@ const {
 } = process.env;
 
 const expressOptions = {
-  host: EXPRESS_SERVER_HOST,
-  port: EXPRESS_SERVER_PORT || 3000,
+  host: VITE_EXPRESS_SERVER_HOST,
+  port: VITE_EXPRESS_SERVER_PORT || 3000,
   cookieSecret: COOKIE_SECRET,
   autoSyncRemaining: AUTO_SYNC_REMAINING || 3600,
 };

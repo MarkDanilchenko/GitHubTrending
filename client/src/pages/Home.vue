@@ -19,7 +19,20 @@
             <li>What is trending repositories?</li>
             <span class="text-small">First &#128175; repositories with the highest &#127775;&#127775;&#127775;</span>
             <li>What kind of repositories are used to be pulled?</li>
-            <span class="text-small">Repositories based on **JavaScript, Typescript Ruby or Python**</span>
+            <span class="text-small">
+              Repositories based on
+              <b>
+                JavaScript
+                <img
+                  src="/img/JavaScript_logo.png"
+                  width="20"
+                  height="20"
+                  alt="JavaScript logo"
+                  title="JavaScript logo"
+                />, Ruby <img src="/img/Ruby_logo.png" width="20" height="20" alt="Ruby logo" title="Ruby logo" /> or
+                Python <img src="/img/Python_logo.png" width="20" height="20" alt="Python logo" title="Python logo" />
+              </b>
+            </span>
             <li>Does the auto synchronization implemented in the service?</li>
             <span class="text-small">&#9989;</span>
             <li>What is auto synchronization interval ?</li>
@@ -53,7 +66,8 @@
       <hr style="width: 50%; margin-left: 25%" />
       <!-- Side control panel -->
       <div class="col-md-4 offset-md-0 col-10 offset-1 d-flex flex-column align-items-center justify-content-start">
-        <div class="sideControlBox shadow-sm p-3 mb-3">
+        <!-- Start/stop/status control block -->
+        <div class="sideControlBox shadow-sm p-3 mb-3 border border-1 rounded rounded-3">
           <div class="text-center mb-3 me-md-0 me-3">
             <span class="text-center text-small">
               {{ autoSyncStatus ? "&#128994;" : "&#128308;" }} Auto synchronization is
@@ -63,12 +77,48 @@
             </span>
           </div>
           <div class="d-flex justify-content-center align-items-center">
-            <button class="btn btn-outline-green-custom btn-sm me-1" @click="startAutoSync">Enable</button>
-            <button class="btn btn-outline-danger btn-sm" @click="stopAutoSync">Disable</button>
+            <button class="btn btn-outline-green-custom btn-sm me-1" @click="autoSyncEnable">Enable</button>
+            <button class="btn btn-outline-danger btn-sm" @click="autoSyncDisable">Disable</button>
+          </div>
+        </div>
+        <!-- Manual sync block -->
+        <div class="sideControlBox shadow-sm p-3 mb-3 border border-1 rounded rounded-3">
+          <div class="text-center mb-3 me-md-0 me-3">
+            <span class="text-center text-small"><b>Manual</b> synchronization</span>
+          </div>
+        </div>
+        <!-- Search block -->
+        <div class="sideControlBox shadow-sm p-3 mb-3 border border-1 rounded rounded-3">
+          <div class="text-center mb-3 me-md-0 me-3">
+            <span class="text-center text-small">Search through recently <b>pulled repositories</b></span>
+          </div>
+          <div class="d-flex flex-column align-items-center justify-content-center">
+            <input
+              id="queryRepositories"
+              v-model="queryRepositories"
+              type="text"
+              class="form-control form-control-sm"
+              aria-describedby="queryRepositoriesInput"
+              placeholder="&#128269;"
+            />
+            <button class="btn btn-outline-green-custom btn-sm me-1 mt-1" :disabled="!queryRepositories" @click="">
+              Search
+            </button>
+          </div>
+        </div>
+        <!-- All repositories block -->
+        <div class="sideControlBox shadow-sm p-3 mb-3 border border-1 rounded rounded-3">
+          <div class="text-center mb-3 me-md-0 me-3">
+            <span class="text-center text-small">Browse <b>all repositories</b></span>
+          </div>
+          <div class="d-flex justify-content-center">
+            <button id="getReposBtn" class="btn btn-outline-green-custom btn-sm me-1" @click="">
+              All repositories
+            </button>
           </div>
         </div>
       </div>
-      <!-- Content block -->
+      <!-- Content displaying block -->
       <div class="col-md-8 offset-md-0 col-10 offset-1 shadow-sm p-3">
         <transition name="fade" mode="out-in">
           <component :is="activeComponent" />
@@ -82,13 +132,18 @@
 import { mapState, mapActions } from "vuex";
 import animationScrollDownArrows from "#/mixins/animationScrollDownArrows.js";
 import animationDescriptionCardLogos from "#/mixins/animationDescriptionCardLogos.js";
+import animationGetReposBtn from "#/mixins/animationGetReposBtn.js";
+import RepositoriesTemplate from "#/components/RepositoriesTemplate.vue";
 
 export default {
   name: "Home",
-  mixins: [animationScrollDownArrows, animationDescriptionCardLogos],
+  components: { RepositoriesTemplate },
+  mixins: [animationScrollDownArrows, animationDescriptionCardLogos, animationGetReposBtn],
   data() {
     return {
       autoSyncRemainingTime: import.meta.env.VITE_AUTO_SYNC_REMAINING,
+      queryRepositories: null,
+      activeComponent: null,
     };
   },
   computed: {
@@ -99,7 +154,6 @@ export default {
   mounted() {
     const scroll = document.getElementById("scroll");
 
-    this.getAutoSyncStatus();
     document.addEventListener("scroll", () => {
       if (scroll && !scroll.hidden && window.scrollY > 200) {
         scroll.hidden = true;
@@ -108,6 +162,8 @@ export default {
         scroll.removeAttribute("hidden");
       }
     });
+    this.activeComponent = "RepositoriesTemplate";
+    this.getAutoSyncStatus();
   },
   unmounted() {
     const scroll = document.getElementById("scroll");
@@ -124,6 +180,10 @@ export default {
   methods: {
     ...mapActions({
       getAutoSyncStatus: "synchronization/getAutoSyncStatus",
+      autoSyncEnable: "synchronization/autoSyncEnable",
+      autoSyncDisable: "synchronization/autoSyncDisable",
+      // getExactRepo: "synchronization/getExactRepo",
+      // getRepos: "synchronization/getRepos",
     }),
     scrollDown() {
       document.getElementById("content").scrollIntoView({

@@ -2,10 +2,9 @@ import server from "./server.js";
 import { expressOptions, mongoOptions } from "./env.js";
 import logger from "./services/loggerConfig.js";
 import mongoose from "./models/init.js";
-import repositoriesSyncController from "./controllers/repositoriesSync.js";
 
 /**
- * Starts the Express.js server, connects to MongoDB and enable auto synchronization with GitHub.
+ * Starts the Express.js server and connects to MongoDB. Auto synchronization with GitHub is enabled by default.
  *
  * @async
  * @returns {Promise<void>}
@@ -21,9 +20,6 @@ async function startServer() {
 
     server.listen(expressOptions.port, expressOptions.host, () => {
       logger.info(`Server is running on http://${expressOptions.host}:${expressOptions.port}`);
-
-      // logger.info(`Auto synchronization is enabled. Remaining in ${expressOptions.autoSyncRemaining}s`);
-      // repositoriesSyncController.autoSync();
     });
   } catch (error) {
     logger.error("Error: " + error.message);
